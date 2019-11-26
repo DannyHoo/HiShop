@@ -19,11 +19,8 @@
         <module>config</module>
         <module>register</module>
         <module>framework</module>
-        <module>business-order</module>
-        <module>business</module>
         <module>business</module>
         <module>management</module>
-        <module>gateway</module>
         <module>gateway</module>
     </modules>
 
