@@ -1,0 +1,22 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: hishop-config
+
+  #profiles:
+    #active: native #ConfigServer默认从应用的src/main/resources下检索配置文件
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/DannyHoo6688/SpringCloudConfig
+          searchPaths: hishop
+          username: DannyHoo6688
+          password: news6688
+          basedir: /data/springcloudconfig
+        #native:
+          #search-locations: file:/data/config/ #ConfigServer默认从指定目录下检索配置文件
+      label: master

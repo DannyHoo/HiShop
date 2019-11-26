@@ -1,0 +1,14 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: hishop-register  #和SpringCloudConig的配置文件前缀一样
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://140.143.158.164:8000/
+      label: master
+      profile: dev
+      name: ${spring.application.name}
