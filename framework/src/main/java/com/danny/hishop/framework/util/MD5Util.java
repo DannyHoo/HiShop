@@ -48,9 +48,9 @@ public class MD5Util {
         return hs.toUpperCase();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println(MD5Util.md5HexTwoSourceAndSalt("123","1"));
-    }
+    }*/
 
 
     /**

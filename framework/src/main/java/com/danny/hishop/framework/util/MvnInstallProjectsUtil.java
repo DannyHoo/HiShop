@@ -25,12 +25,12 @@ public class MvnInstallProjectsUtil {
      * @throws IOException
      * @throws InterruptedException
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    /*public static void main(String[] args) throws IOException, InterruptedException {
         List<String> rootPackagePathList = Arrays.asList(args);
         for (String rootPackagePath : rootPackagePathList) {
             MvnInstallProjectsUtil.install(rootPackagePath);
         }
-    }
+    }*/
 
     private static boolean install(String rootPackagePath) throws IOException, InterruptedException {
         File file = new File(rootPackagePath);

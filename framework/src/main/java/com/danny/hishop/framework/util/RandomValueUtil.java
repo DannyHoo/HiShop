@@ -104,10 +104,10 @@ public class RandomValueUtil {
         return map;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         for (int i = 0; i < 100; i++) {
             System.out.println(getAddress());
             //          System.out.println(getEmailName(6,9));
         }
-    }
+    }*/
 }

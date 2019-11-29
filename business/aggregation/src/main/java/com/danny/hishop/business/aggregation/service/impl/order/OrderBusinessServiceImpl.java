@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Description:
  * @Created on 2018-12-21 16:01:41
  */
-@Service("orderBusinessService")
+/*@Service("orderBusinessService")*/
 public class OrderBusinessServiceImpl implements OrderBusinessService {
 
     @Autowired

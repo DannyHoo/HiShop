@@ -1,7 +1,7 @@
 package com.danny.hishop.business.aggregation.model.order.param;
 
 
-import com.danny.hishop.business.order.model.dto.OrderDetailDTO;
+import com.danny.hishop.business.aggregation.model.order.dto.OrderDetailDTO;
 import com.danny.hishop.framework.model.param.BaseParameter;
 
 import java.util.List;

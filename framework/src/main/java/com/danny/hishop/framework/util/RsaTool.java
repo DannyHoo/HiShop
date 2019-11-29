@@ -20,7 +20,7 @@ public class RsaTool {
     /**
      * 测试方法
      */
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 //        Map<String, Object> map = new HashMap<String, Object>();
 //        map = RsaTool.init();
 //        System.out.println("公钥："+RsaTool.getPublicKey(map));
@@ -47,7 +47,7 @@ public class RsaTool {
         boolean status = verify(enStr2, publicKey, sign);
         System.out.println("状态:" + status);
 
-    }
+    }*/
 
     //定义加密方式
     public static final String KEY_RSA = "RSA";

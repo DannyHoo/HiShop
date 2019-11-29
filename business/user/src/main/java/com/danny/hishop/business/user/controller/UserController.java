@@ -17,7 +17,7 @@ import javax.validation.Valid;
  * @date 2019/11/26下午9:36
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/user")
 public class UserController {
 
     @Autowired

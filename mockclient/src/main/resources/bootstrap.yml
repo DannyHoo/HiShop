@@ -1,0 +1,19 @@
+server:
+  port: 8500
+
+spring:
+  application:
+    name: news-mockclient
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://140.143.158.164:8000/
+      label: master
+      profile: dev
+      name: ${spring.application.name},common,database,redis
+
+config:
+  opay:
+    host:
+      common: localhost:8400/

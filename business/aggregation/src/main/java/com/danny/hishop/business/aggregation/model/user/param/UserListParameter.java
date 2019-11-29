@@ -1,6 +1,6 @@
 package com.danny.hishop.business.aggregation.model.user.param;
 
-import com.danny.hishop.business.user.model.dto.UserDTO;
+import com.danny.hishop.business.aggregation.model.user.dto.UserDTO;
 import com.danny.hishop.framework.model.param.BaseParameter;
 import lombok.Data;
 import lombok.experimental.Accessors;
