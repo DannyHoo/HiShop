@@ -1,8 +1,11 @@
-package com.danny.hishop.business.aggregation.service.impl.order;
+package com.danny.hishop.business.aggregation.service;
 
 
+import com.danny.hishop.business.aggregation.feign.goods.GoodsService;
+import com.danny.hishop.business.aggregation.feign.order.OrderService;
 import com.danny.hishop.business.aggregation.model.goods.dto.GoodsDTO;
 import com.danny.hishop.business.aggregation.model.goods.param.GoodsParameter;
+import com.danny.hishop.business.aggregation.model.order.dto.OrderDTO;
 import com.danny.hishop.business.aggregation.model.order.dto.OrderDetailDTO;
 import com.danny.hishop.business.aggregation.model.order.param.CreateOrderParameter;
 import com.danny.hishop.business.aggregation.model.order.param.OrderDetailListParameter;
@@ -10,13 +13,11 @@ import com.danny.hishop.business.aggregation.model.order.param.OrderParameter;
 import com.danny.hishop.business.aggregation.model.result.order.CreateOrderResult;
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
 import com.danny.hishop.business.aggregation.model.user.dto.UserDTO;
-import com.danny.hishop.business.aggregation.model.user.param.AddressParameter;
-import com.danny.hishop.business.aggregation.service.order.OrderBusinessService;
+import com.danny.hishop.business.aggregation.feign.user.UserService;
 import com.danny.hishop.framework.model.enums.ResultStatusEnum;
-import com.danny.hishop.framework.model.enums.YesNoEnum;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import com.danny.hishop.framework.mq.MQProducer;
-import com.danny.hishop.framework.mq.model.enums.MQTopicEnum;
+import com.danny.hishop.framework.util.BeanUtil;
 import com.danny.hishop.framework.util.ListUtil;
 import com.danny.hishop.framework.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,17 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Description:
  * @Created on 2018-12-21 16:01:41
  */
-/*@Service("orderBusinessService")*/
+@Service("orderBusinessService")
 public class OrderBusinessServiceImpl implements OrderBusinessService {
 
     @Autowired
-    private MQProducer producer;
+    private UserService userService;
+
+    @Autowired
+    private GoodsService goodsService;
+
+    @Autowired
+    private OrderService orderService;
 
     private static final Lock lock = new ReentrantLock();
 
@@ -50,14 +57,9 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
 
         /* 查询收货人信息 */
         AddressDTO addressDTO;
-        //ServiceResult<List<AddressDTO>> addressDTOServiceResult = addressService.findByUserNameAndIsDefault(new AddressParameter().setUserName(userDTO.getUserName()).setIsDefault(YesNoEnum.YES.getCode()));
-        ServiceResult<List<AddressDTO>> addressDTOServiceResult = null;
+        ServiceResult<List<AddressDTO>> addressDTOServiceResult = userService.getAddressByUserName(userDTO.getUserName());
         if (addressDTOServiceResult.isFail() || ListUtil.isEmpty(addressDTOServiceResult.getData())) {
-            //addressDTOServiceResult = addressService.findByUserName(new AddressParameter().setUserName(userDTO.getUserName()));
-            addressDTOServiceResult = null;
-            if (addressDTOServiceResult.isFail() || ListUtil.isEmpty(addressDTOServiceResult.getData())) {
-                return new ServiceResult<>(ResultStatusEnum.USER_ADDRESS_NOT_EXIST);
-            }
+            return new ServiceResult<>(ResultStatusEnum.USER_ADDRESS_NOT_EXIST);
         }
         addressDTO = addressDTOServiceResult.getData().get(0);
 
@@ -69,8 +71,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         lock.lock();
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
             //校验商品信息
-            //ServiceResult<GoodsDTO> goodsDTOServiceResult = goodsService.findByGoodsNo(new GoodsParameter().setGoodsNo(orderDetailDTO.getGoodsNo()));
-            ServiceResult<GoodsDTO> goodsDTOServiceResult = null;
+            ServiceResult<GoodsDTO> goodsDTOServiceResult = goodsService.getByGoodsNo(orderDetailDTO.getGoodsNo());
             if (goodsDTOServiceResult.isFail() || goodsDTOServiceResult.getData() == null) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_NOT_EXIST);
             }
@@ -82,8 +83,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
             orderDetailDTO.setActualPrice(orderDetailDTO.getActualPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getNowPrice())));
             orderDetailDTO.setTotalPrice(orderDetailDTO.getTotalPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getOriginPrice())));
             //远程调用更新库存
-            //ServiceResult<Boolean> saveGoodsResult = goodsService.updateGoods(BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class).setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
-            ServiceResult<Boolean> saveGoodsResult = null;
+            ServiceResult<Boolean> saveGoodsResult = goodsService.updateGoods(BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class).setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
             if (saveGoodsResult.isFail() || !Boolean.TRUE.equals(saveGoodsResult.getData())) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_BALANCE_UPDATE_FAILURE);
             }
@@ -115,27 +115,12 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
                 .setActualPrice(BigDecimal.ZERO);
 
         /* 远程调用 订单入库 */
-        try {
-            //producer.sendMessage(new MQMessage().setMqTopicAndTag(MQTopicEnum.ORDER_SAVE).setBizValue(orderParameter));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /*ServiceResult<OrderDTO> saveOrderResult = orderService.saveOrder(orderParameter);
-        if (saveOrderResult.isFail() || saveOrderResult.getData() == null) {
-            // TODO: 2019-02-26
-        }*/
+        ServiceResult<OrderDTO> saveOrderResult = orderService.saveOrder(orderParameter);
+
         /* 远程调用 订单详情入库 */
-        try {
-            //producer.sendMessage(new MQMessage().setMqTopicAndTag(MQTopicEnum.ORDER_DETAIL_SAVE).setBizValue(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /*ServiceResult<List<OrderDetailDTO>> saveOrderDetailListResult = orderDetailService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
-        if (saveOrderDetailListResult.isFail() || ListUtil.isEmpty(saveOrderDetailListResult.getData())) {
-            // TODO: 2019-02-26
-        }*/
+        ServiceResult<List<OrderDetailDTO>> saveOrderDetailResult = orderService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
+
         return new ServiceResult<CreateOrderResult>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。");
-        //return new ServiceResult<CreateOrderResult>(ResultStatusEnum.SUCCESS, new CreateOrderResult().setOrderDTO(saveOrderResult.getData()).setOrderDetailDTOList(saveOrderDetailListResult.getData()));
     }
 
     private void initOrderDetailDTOList(List<OrderDetailDTO> orderDetailDTOList, String orderNo) {

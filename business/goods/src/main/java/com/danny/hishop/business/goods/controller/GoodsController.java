@@ -1,10 +1,13 @@
 package com.danny.hishop.business.goods.controller;
 
+import com.danny.hishop.business.goods.model.param.GoodsParameter;
 import com.danny.hishop.business.goods.service.GoodsService;
 import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author huyuyang
@@ -12,22 +15,22 @@ import org.springframework.web.bind.annotation.*;
  * @date 2019/11/26下午9:36
  */
 @RestController
-@RequestMapping("/goods")
+@RequestMapping("/goods/goods")
 public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/get/{userName}", method = RequestMethod.GET)
-    public Response get(@PathVariable String userName) {
-        ServiceResult result = null;
-        return Response.buildSuccess(result.getData());
+    @RequestMapping(value = "/getByGoodsNo/{goodsNo}", method = RequestMethod.GET)
+    public Response getByGoodsNo(@PathVariable String goodsNo) {
+        ServiceResult result = goodsService.findByGoodsNo(new GoodsParameter().setGoodsName(goodsNo));
+        return Response.build(result);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Response save() throws Exception {
-        ServiceResult result = null;
-        return Response.buildSuccess(result);
-    }
 
+    @RequestMapping(value = "/updateGoods", method = RequestMethod.POST)
+    public Response updateGoods(@RequestBody GoodsParameter goodsParameter) throws Exception {
+        ServiceResult result = goodsService.updateGoods(goodsParameter);
+        return Response.build(result);
+    }
 }

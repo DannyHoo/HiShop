@@ -28,10 +28,10 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping(value = "/get/{userName}", method = RequestMethod.GET)
-    public Response get(@PathVariable String userName) {
+    @RequestMapping(value = "/getByUserName/{userName}", method = RequestMethod.GET)
+    public Response getByUserName(@PathVariable String userName) {
         ServiceResult<List<AddressDTO>> result = addressService.findByUserNameAndIsDefault(new AddressParameter().setUserName(userName).setIsDefault(YesNoEnum.YES.getCode()));
-        return Response.buildSuccess(result.getData());
+        return Response.build(result);
     }
 
 }

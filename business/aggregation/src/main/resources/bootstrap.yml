@@ -45,8 +45,3 @@ spring:
       label: master
       profile: dev
       name: ${spring.application.name},common,redis
-
-config:
-  feign:
-    user:
-      host: 10.249.201.159:8340

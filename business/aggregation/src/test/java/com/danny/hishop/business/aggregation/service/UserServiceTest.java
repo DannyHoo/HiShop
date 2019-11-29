@@ -3,10 +3,8 @@ package com.danny.hishop.business.aggregation.service;
 import com.alibaba.fastjson.JSONObject;
 import com.danny.hishop.business.aggregation.AggregationApplicationTests;
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
-import com.danny.hishop.business.aggregation.service.user.UserService;
+import com.danny.hishop.business.aggregation.feign.user.UserService;
 import com.danny.hishop.framework.model.result.ServiceResult;
-import lombok.Data;
-import lombok.experimental.Accessors;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,14 +1,10 @@
-package com.danny.hishop.business.aggregation.service.user;
+package com.danny.hishop.business.aggregation.feign.user;
 
-import com.alibaba.fastjson.JSONObject;
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
 import com.danny.hishop.framework.model.result.ServiceResult;
-import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
 @FeignClient(value = "HISHOP-USER", fallback = UserFallback.class,fallbackFactory = UserFallbackFactory.class)
 public interface UserService {
 
-    @GetMapping("/user/address/get/{userName}")
+    @GetMapping("/user/address/getByUserName/{userName}")
     ServiceResult<List<AddressDTO>> getAddressByUserName(@PathVariable String userName);
 
     /*@PostMapping("/open/encrypt/getRSA")
