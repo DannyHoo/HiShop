@@ -1,9 +1,9 @@
 server:
-  port: 8340
+  port: 8310
 
 spring:
   application:
-    name: hishop-user  #和SpringCloudConig的配置文件前缀一样
+    name: hishop-aggregation  #和SpringCloudConig的配置文件前缀一样
   profiles:
     active: dev
   cloud:
@@ -12,3 +12,4 @@ spring:
       label: master
       profile: dev
       name: ${spring.application.name},common,redis
+
