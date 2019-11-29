@@ -3,6 +3,8 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+out/*
+
 ### STS ###
 .apt_generated
 .classpath
