@@ -17,7 +17,7 @@ import java.util.List;
  * @email yuyang.hu@opay-inc.com
  * @date 2019/11/23下午10:15
  */
-@FeignClient(name = "HISHOP-USER", fallback = UserFallback.class,fallbackFactory = UserFallbackFactory.class)
+@FeignClient(value = "HISHOP-USER", fallback = UserFallback.class,fallbackFactory = UserFallbackFactory.class)
 public interface UserService {
 
     @GetMapping("/user/address/get/{userName}")
