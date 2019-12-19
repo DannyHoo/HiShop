@@ -2,6 +2,7 @@ package com.danny.hishop.business.aggregation.feign.goods;
 
 import com.danny.hishop.business.aggregation.model.goods.dto.GoodsDTO;
 import com.danny.hishop.business.aggregation.model.goods.param.GoodsParameter;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 
 /**
@@ -12,12 +13,12 @@ import com.danny.hishop.framework.model.result.ServiceResult;
 public class GoodsFallback implements GoodsService {
 
     @Override
-    public ServiceResult<GoodsDTO> getByGoodsNo(String goodsNo) {
+    public Response<GoodsDTO> getByGoodsNo(String goodsNo) {
         return null;
     }
 
     @Override
-    public ServiceResult<Boolean> updateGoods(GoodsParameter goodsParameter) {
+    public Response<Boolean> updateGoods(GoodsParameter goodsParameter) {
         return null;
     }
 }

@@ -4,7 +4,7 @@ import com.danny.hishop.business.aggregation.model.order.dto.OrderDTO;
 import com.danny.hishop.business.aggregation.model.order.dto.OrderDetailDTO;
 import com.danny.hishop.business.aggregation.model.order.param.OrderDetailListParameter;
 import com.danny.hishop.business.aggregation.model.order.param.OrderParameter;
-import com.danny.hishop.framework.model.result.ServiceResult;
+import com.danny.hishop.framework.model.response.Response;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class OrderFallbackFactory implements OrderService {
     @Override
-    public ServiceResult<OrderDTO> saveOrder(OrderParameter orderParameter) {
+    public Response<OrderDTO> saveOrder(OrderParameter orderParameter) {
         return null;
     }
 
     @Override
-    public ServiceResult<List<OrderDetailDTO>> saveOrderDetailList(OrderDetailListParameter orderDetailListParameter) {
+    public Response<List<OrderDetailDTO>> saveOrderDetailList(OrderDetailListParameter orderDetailListParameter) {
         return null;
     }
 }

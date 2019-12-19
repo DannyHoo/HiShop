@@ -35,4 +35,12 @@ public class Response<T> extends BaseModel {
                 .setMessage(ResultStatusEnum.SUCCESS.getDescription())
                 .setData(data);
     }
+
+    public boolean isSuccess() {
+        return ResultStatusEnum.SUCCESS.getCode() == code;
+    }
+
+    public boolean isFail() {
+        return ResultStatusEnum.SUCCESS.getCode() != code;
+    }
 }

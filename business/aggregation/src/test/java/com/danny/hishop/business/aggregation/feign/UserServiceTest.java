@@ -1,9 +1,10 @@
-package com.danny.hishop.business.aggregation.service;
+package com.danny.hishop.business.aggregation.feign;
 
 import com.alibaba.fastjson.JSONObject;
 import com.danny.hishop.business.aggregation.AggregationApplicationTests;
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
 import com.danny.hishop.business.aggregation.feign.user.UserService;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class UserServiceTest extends AggregationApplicationTests {
     private UserService userService;
 
     @Test
-    public void getRSATest() {
-        ServiceResult<List<AddressDTO>>  result=userService.getAddressByUserName("82Z76oIu");
+    public void getAddressByUserNameTest() {
+        Response<List<AddressDTO>> result=userService.getAddressByUserName("82Z76oIu");
         System.out.println(JSONObject.toJSONString(result));
     }
 

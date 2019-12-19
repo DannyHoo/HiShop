@@ -15,6 +15,7 @@ import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
 import com.danny.hishop.business.aggregation.model.user.dto.UserDTO;
 import com.danny.hishop.business.aggregation.feign.user.UserService;
 import com.danny.hishop.framework.model.enums.ResultStatusEnum;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import com.danny.hishop.framework.mq.MQProducer;
 import com.danny.hishop.framework.util.BeanUtil;
@@ -57,11 +58,11 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
 
         /* 查询收货人信息 */
         AddressDTO addressDTO;
-        ServiceResult<List<AddressDTO>> addressDTOServiceResult = userService.getAddressByUserName(userDTO.getUserName());
-        if (addressDTOServiceResult.isFail() || ListUtil.isEmpty(addressDTOServiceResult.getData())) {
+        Response<List<AddressDTO>> addressDTOResponse = userService.getAddressByUserName(userDTO.getUserName());
+        if (addressDTOResponse.isFail() || ListUtil.isEmpty(addressDTOResponse.getData())) {
             return new ServiceResult<>(ResultStatusEnum.USER_ADDRESS_NOT_EXIST);
         }
-        addressDTO = addressDTOServiceResult.getData().get(0);
+        addressDTO = addressDTOResponse.getData().get(0);
 
         /* 远程调用 更新商品库存 */
         String orderNo = "OD" + StringUtil.getRandomTimeStr();
@@ -71,20 +72,20 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         lock.lock();
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
             //校验商品信息
-            ServiceResult<GoodsDTO> goodsDTOServiceResult = goodsService.getByGoodsNo(orderDetailDTO.getGoodsNo());
-            if (goodsDTOServiceResult.isFail() || goodsDTOServiceResult.getData() == null) {
+            Response<GoodsDTO> goodsDTOResponse = goodsService.getByGoodsNo(orderDetailDTO.getGoodsNo());
+            if (goodsDTOResponse.isFail() || goodsDTOResponse.getData() == null) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_NOT_EXIST);
             }
             //校验商品数量
-            GoodsDTO goodsDTO = goodsDTOServiceResult.getData();
+            GoodsDTO goodsDTO = goodsDTOResponse.getData();
             if (goodsDTO.getBalance() < orderDetailDTO.getGoodsNum()) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_BALANCE_NOT_ENOUGH);
             }
             orderDetailDTO.setActualPrice(orderDetailDTO.getActualPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getNowPrice())));
             orderDetailDTO.setTotalPrice(orderDetailDTO.getTotalPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getOriginPrice())));
             //远程调用更新库存
-            ServiceResult<Boolean> saveGoodsResult = goodsService.updateGoods(BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class).setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
-            if (saveGoodsResult.isFail() || !Boolean.TRUE.equals(saveGoodsResult.getData())) {
+            Response<Boolean> saveGoodsResponse = goodsService.updateGoods(BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class).setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
+            if (saveGoodsResponse.isFail() || !Boolean.TRUE.equals(saveGoodsResponse.getData())) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_BALANCE_UPDATE_FAILURE);
             }
         }
@@ -115,10 +116,10 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
                 .setActualPrice(BigDecimal.ZERO);
 
         /* 远程调用 订单入库 */
-        ServiceResult<OrderDTO> saveOrderResult = orderService.saveOrder(orderParameter);
+        Response<OrderDTO> saveOrderResult = orderService.saveOrder(orderParameter);
 
         /* 远程调用 订单详情入库 */
-        ServiceResult<List<OrderDetailDTO>> saveOrderDetailResult = orderService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
+        Response<List<OrderDetailDTO>> saveOrderDetailResult = orderService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
 
         return new ServiceResult<CreateOrderResult>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。");
     }

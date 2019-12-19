@@ -1,5 +1,6 @@
 package com.danny.hishop.business.aggregation;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -11,6 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AggregationApplication.class)
+
 public class AggregationApplicationTests {
+
+    protected static void printResult(Object result){
+        System.out.println(JSON.toJSONString(result));
+    }
 
 }

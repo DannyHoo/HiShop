@@ -1,6 +1,7 @@
 package com.danny.hishop.business.aggregation.feign.user;
 
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class UserFallback implements UserService {
 
     @Override
-    public ServiceResult<List<AddressDTO>> getAddressByUserName(String userName) {
+    public Response<List<AddressDTO>> getAddressByUserName(String userName) {
         return null;
     }
 }

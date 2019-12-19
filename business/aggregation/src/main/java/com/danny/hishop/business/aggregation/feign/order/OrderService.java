@@ -4,6 +4,7 @@ import com.danny.hishop.business.aggregation.model.order.dto.OrderDTO;
 import com.danny.hishop.business.aggregation.model.order.dto.OrderDetailDTO;
 import com.danny.hishop.business.aggregation.model.order.param.OrderDetailListParameter;
 import com.danny.hishop.business.aggregation.model.order.param.OrderParameter;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,8 @@ import java.util.List;
 public interface OrderService {
 
     @PostMapping("/order/order/save")
-    ServiceResult<OrderDTO> saveOrder(OrderParameter orderParameter);
+    Response<OrderDTO> saveOrder(OrderParameter orderParameter);
 
     @PostMapping("/order/detail/save")
-    ServiceResult<List<OrderDetailDTO>> saveOrderDetailList(OrderDetailListParameter orderDetailListParameter);
+    Response<List<OrderDetailDTO>> saveOrderDetailList(OrderDetailListParameter orderDetailListParameter);
 }

@@ -23,7 +23,7 @@ public class GoodsController {
 
     @RequestMapping(value = "/getByGoodsNo/{goodsNo}", method = RequestMethod.GET)
     public Response getByGoodsNo(@PathVariable String goodsNo) {
-        ServiceResult result = goodsService.findByGoodsNo(new GoodsParameter().setGoodsName(goodsNo));
+        ServiceResult result = goodsService.findByGoodsNo(new GoodsParameter().setGoodsNo(goodsNo));
         return Response.build(result);
     }
 

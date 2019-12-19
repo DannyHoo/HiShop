@@ -20,6 +20,6 @@ public interface GoodsDAO {
     @SelectKey(before = false, keyProperty = "id", resultType = Long.class, statementType = StatementType.STATEMENT, statement = "SELECT LAST_INSERT_ID() AS id")
     int saveGoods(GoodsDO goodsDO);
 
-    @Update("update t_goods set goodsName=#{goodsName},originPrice=#{originPrice},nowPrice=#{nowPrice},totalNum=#{totalNum},balance=#{balance},description=#{description},pictureUrls=#{pictureUrls},status=#{status} where id=#{id}")
+    @Update("update t_goods set goodsName=#{goodsName},originPrice=#{originPrice},nowPrice=#{nowPrice},totalNum=#{totalNum},balance=#{balance},description=#{description},pictureUrls=#{pictureUrls},status=#{status} where goodsNo=#{goodsNo}")
     int update(GoodsDO goodsDO);
 }

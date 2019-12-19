@@ -1,6 +1,7 @@
 package com.danny.hishop.business.aggregation.feign.user;
 
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
+import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface UserService {
 
     @GetMapping("/user/address/getByUserName/{userName}")
-    ServiceResult<List<AddressDTO>> getAddressByUserName(@PathVariable String userName);
+    Response<List<AddressDTO>> getAddressByUserName(@PathVariable String userName);
 
     /*@PostMapping("/open/encrypt/getRSA")
     JSONObject getRSA();
