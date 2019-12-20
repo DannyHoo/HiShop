@@ -12,3 +12,11 @@ spring:
       label: master
       profile: dev
       name: ${spring.application.name},common,redis
+
+# 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #exclude: beans #不暴露beans端点
