@@ -24,9 +24,9 @@ public class OrderBusinessServiceImplTest extends AggregationApplicationTests {
 
     @Test
     public void createOrderTest() {
-        for (int i=0;i<1000;i++){
+        for (int i=0;i<1;i++){
             List<OrderDetailDTO> orderDetailDTOList = new ArrayList<>();
-            orderDetailDTOList.add(new OrderDetailDTO().setGoodsNo("G20180614160305682062").setGoodsNum(1));
+            orderDetailDTOList.add(new OrderDetailDTO().setGoodsNo("G20180614161040114149").setGoodsNum(1));
             CreateOrderParameter createOrderParameter = new CreateOrderParameter()
                     .setUserDTO(new UserDTO().setUserName("82Z76oIu"))
                     .setOrderDetailDTOList(orderDetailDTOList);

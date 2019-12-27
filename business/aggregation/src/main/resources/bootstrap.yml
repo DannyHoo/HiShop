@@ -28,4 +28,12 @@ spring:
       label: master
       profile: dev
       name: ${spring.application.name},common,redis
-
+feign:
+  client:
+    config:
+      default: #全局超时配置 connectTimeout和readTimeout都要配置，否则会已ribbon的配置为主（都是1000）
+        connectTimeout: 2000
+        readTimeout: 5000
+      hishop-user: #具体服务超时配置
+        connectTimeout: 2000
+        readTimeout: 5000
