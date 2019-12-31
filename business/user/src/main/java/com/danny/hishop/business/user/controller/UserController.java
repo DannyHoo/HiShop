@@ -26,13 +26,13 @@ public class UserController {
     @RequestMapping(value = "/get/{userName}", method = RequestMethod.GET)
     public Response get(@PathVariable String userName) {
         ServiceResult<UserDTO> result = userService.findByUserName(new UserParameter().setUserName(userName));
-        return Response.buildSuccess(result.getData());
+        return Response.build(result);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Response save(@RequestBody UserParameter userParameter) throws Exception {
         ServiceResult<UserDTO> result = userService.saveUser(userParameter);
-        return Response.buildSuccess(result.getData().getId());
+        return Response.build(result);
     }
 
 }

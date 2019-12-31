@@ -6,6 +6,7 @@ import com.danny.hishop.business.aggregation.model.order.param.OrderDetailListPa
 import com.danny.hishop.business.aggregation.model.order.param.OrderParameter;
 import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午10:12
  */
+@Component
 public class OrderFallback implements OrderService{
     @Override
     public Response<OrderDTO> saveOrder(OrderParameter orderParameter) {

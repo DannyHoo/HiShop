@@ -15,6 +15,9 @@ spring:
 
 # 监控配置
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:

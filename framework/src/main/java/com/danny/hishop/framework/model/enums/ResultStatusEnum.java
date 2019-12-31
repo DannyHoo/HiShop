@@ -16,6 +16,7 @@ public enum  ResultStatusEnum implements ResultStatusEnumInterface {
     UNKOWN_SYS_ERROR(100002, "服务器正忙,请稍后重试"),
     //必须的参数为空
     PARAMETER_IS_NULL(100003,"参数为空"),
+    SERVICE_FUSE_OPEN(100004,"服务熔断开启"),
 
     //登录注册 200000~200999
     USER_ALREADY_EXIST(200000,"用户名已存在"),
