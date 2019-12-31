@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
@@ -44,13 +45,13 @@ public class OrderBusinessController {
 
 
     /**
-     * 异步下单
+     * Servelt异步下单
      *
      * @param httpServletRequest
      * @param createOrderParameter
      * @return
      */
-    @RequestMapping("/create/async")
+    @RequestMapping("/create/servlet/async")
     public Response createOrder(HttpServletRequest httpServletRequest, CreateOrderParameter createOrderParameter) {
         AsyncContext asyncContext = httpServletRequest.getAsyncContext();
         asyncContext.addListener(new AsyncListener() {
