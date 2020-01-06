@@ -11,6 +11,6 @@ import com.danny.hishop.framework.model.result.ServiceResult;
  */
 public interface OrderBusinessService {
 
-    ServiceResult<CreateOrderResult> createOrder(CreateOrderParameter createOrderParameter);
+    ServiceResult<String> createOrder(CreateOrderParameter createOrderParameter);
 
 }

@@ -1,0 +1,45 @@
+server:
+  port: 8200
+
+spring:
+  application:
+    name: hishop-gateway
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://140.143.158.164:8000/
+      label: master
+      profile: dev
+      name: ${spring.application.name},common,redis
+
+# 监控配置
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #exclude: beans #不暴露beans端点
+zuul:
+  routes:
+    hishop-aggregation: /api/aggregation/**
+    hishop-goods: /api/goods/**
+    hishop-order: /api/order/**
+    hishop-user: /api/user/**
+  #统一入口为上面的配置，其他入口忽略
+  ignored-patterns: /hishop-*/**
+  #忽略整个服务，对外提供接口
+  ignored-services: hishop-order
+  ribbon-isolation-strategy: semaphore
+  semaphore:
+    max-semaphores: 20
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+ribbon:        #设置ribbon的超时时间小于zuul的超时时间
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

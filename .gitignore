@@ -27,3 +27,5 @@ out/*
 /nbdist/
 /.nb-gradle/
 build/
+/gateway/.gitignore
+*.jar

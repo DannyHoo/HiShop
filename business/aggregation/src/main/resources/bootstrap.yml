@@ -35,13 +35,13 @@ feign:
 #        connectTimeout: 2000
 #        readTimeout: 2200
       hishop-user: #具体服务超时配置，FeignClient的value，区分大小写
-        connectTimeout: 2000
+        connectTimeout: 5000
         readTimeout: 5000
       hishop-goods: #具体服务超时配置，FeignClient的value，区分大小写
-        connectTimeout: 2000
+        connectTimeout: 5000
         readTimeout: 5000
       hishop-order: #具体服务超时配置，FeignClient的value，区分大小写
-        connectTimeout: 2000
+        connectTimeout: 5000
         readTimeout: 5000
   #开启hystrix
   hystrix:

@@ -13,7 +13,59 @@ spring:
       profile: dev
       name: ${spring.application.name},common,database,redis
 
+feign:
+  client:
+    config:
+      #      default: #全局超时配置 connectTimeout和readTimeout都要配置，否则会以ribbon的配置为主（都是1000）
+      #        connectTimeout: 2000
+      #        readTimeout: 2200
+      hishop-gateway: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 20000
+        readTimeout: 20000
+      hishop-aggregation: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 10000
+        readTimeout: 10000
+      hishop-user: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 10000
+        readTimeout: 10000
+      hishop-goods: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 10000
+        readTimeout: 10000
+      hishop-order: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 10000
+        readTimeout: 10000
+  #开启hystrix
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        #isolation:
+        #thread:
+        #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
+        timeout:
+          enabled: false #hystrix从不超时
+
+# 监控配置
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #exclude: beans #不暴露beans端点
+
 config:
-  opay:
-    host:
-      common: localhost:8400/
+  hishop:
+    common:
+      host: localhost:8080/
+    gateway:
+      host: localhost:8200/
+    aggregation:
+      host: localhost:8311/
+
+

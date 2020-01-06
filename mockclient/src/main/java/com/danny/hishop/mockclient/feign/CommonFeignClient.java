@@ -1,7 +1,6 @@
 package com.danny.hishop.mockclient.feign;
 
 import com.alibaba.fastjson.JSONObject;
-import com.danny.hishop.mockclient.feign.callback.CommonFeignFactory;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * @email yuyang.hu@opay-inc.com
  * @date 2019/11/23下午10:15
  */
-@FeignClient(name = "commonFeignClient", url = "${config.opay.host.common}", fallbackFactory = CommonFeignFactory.class)
+@FeignClient(name = "commonFeignClient", url = "${config.hishop.common.host}")
 public interface CommonFeignClient {
 
     @PostMapping("/open/encrypt/getRSA")

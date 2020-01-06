@@ -21,8 +21,8 @@
         <module>framework</module>
         <module>business</module>
         <module>management</module>
-        <module>gateway</module>
         <module>mockclient</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

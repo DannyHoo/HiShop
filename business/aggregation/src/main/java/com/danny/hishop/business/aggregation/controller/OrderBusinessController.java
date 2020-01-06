@@ -6,6 +6,7 @@ import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.WebAsyncTask;
@@ -36,11 +37,10 @@ public class OrderBusinessController {
      * @param createOrderParameter
      * @return
      */
-    @RequestMapping("/create/sync")
-    public Response createOrderSync(HttpServletRequest httpServletRequest, CreateOrderParameter createOrderParameter) {
-        AsyncContext asyncContext = httpServletRequest.getAsyncContext();
+    @RequestMapping("/create")
+    public Response createOrderSync(HttpServletRequest httpServletRequest, @RequestBody CreateOrderParameter createOrderParameter) {
         ServiceResult result = orderBusinessService.createOrder(createOrderParameter);
-        return Response.buildSuccess();
+        return Response.build(result);
     }
 
 

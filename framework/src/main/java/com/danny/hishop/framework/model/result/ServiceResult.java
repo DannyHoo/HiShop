@@ -46,6 +46,12 @@ public class ServiceResult<R> implements Serializable {
         this.message = message;
     }
 
+    public ServiceResult(ResultStatusEnumInterface resultStatusEnum, String message,R data) {
+        this.resultStatusEnum = resultStatusEnum;
+        this.message = message;
+        this.data=data;
+    }
+
     public ResultStatusEnumInterface getResultStatusEnum() {
         return resultStatusEnum;
     }

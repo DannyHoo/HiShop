@@ -50,7 +50,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
     private static final Lock lock = new ReentrantLock();
 
     @Override
-    public ServiceResult<CreateOrderResult> createOrder(CreateOrderParameter createOrderParameter) {
+    public ServiceResult<String> createOrder(CreateOrderParameter createOrderParameter) {
 
         //已有数据准备
         UserDTO userDTO = createOrderParameter.getUserDTO();
@@ -121,7 +121,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         /* 远程调用 订单详情入库 */
         Response<List<OrderDetailDTO>> saveOrderDetailResult = orderService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
 
-        return new ServiceResult<CreateOrderResult>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。");
+        return new ServiceResult<String>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。",orderNo);
     }
 
     private void initOrderDetailDTOList(List<OrderDetailDTO> orderDetailDTOList, String orderNo) {

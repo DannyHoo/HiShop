@@ -25,7 +25,7 @@ public class Response<T> extends BaseModel {
     public static <T> Response<T> build(ServiceResult<T> serviceResult) {
         return new Response<T>()
                 .setCode(serviceResult.getResultStatusEnum().getCode())
-                .setMessage(serviceResult.getResultStatusEnum().getDescription())
+                .setMessage(serviceResult.getMessage())
                 .setData(serviceResult.getData());
     }
 

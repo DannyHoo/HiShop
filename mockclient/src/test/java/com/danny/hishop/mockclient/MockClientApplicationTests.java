@@ -1,5 +1,6 @@
 package com.danny.hishop.mockclient;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,4 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = MockClientApplication.class)
 public class MockClientApplicationTests {
 
+    protected static void printResult(Object result){
+        System.out.println("Result:");
+        System.out.println(JSON.toJSONString(result));
+    }
 }
