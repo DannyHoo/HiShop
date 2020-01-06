@@ -36,10 +36,13 @@ zuul:
   ribbon-isolation-strategy: semaphore
   semaphore:
     max-semaphores: 20
+
+  #需要配置host和ribbon的超时时间，否则会异常Hystrix Readed time out（SendErrorFilter类的80行）
   host:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
 
-ribbon:        #设置ribbon的超时时间小于zuul的超时时间
+#设置ribbon的超时时间需要小于zuul的超时时间
+ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
