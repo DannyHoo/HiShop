@@ -37,7 +37,7 @@ zuul:
   semaphore:
     max-semaphores: 20
 
-  #需要配置host和ribbon的超时时间，否则会异常Hystrix Readed time out（SendErrorFilter类的80行）
+  #需要配置host和ribbon的超时时间，否则会异常Hystrix Readed time out（SendErrorFilter类的80行）https://my.oschina.net/zhongwenhao/blog/3089219
   host:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
