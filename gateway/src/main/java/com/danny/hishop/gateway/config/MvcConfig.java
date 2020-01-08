@@ -1,4 +1,4 @@
-package com.danny.hishop.business.aggregation.config;
+package com.danny.hishop.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void configureAsyncSupport(final AsyncSupportConfigurer configurer) {
         //处理 callable超时
-        configurer.setDefaultTimeout(60 * 1000);
+        configurer.setDefaultTimeout(10 * 1000);
         configurer.setTaskExecutor(myThreadPoolTaskExecutor);
         configurer.registerCallableInterceptors(timeoutCallableProcessingInterceptor());
     }
