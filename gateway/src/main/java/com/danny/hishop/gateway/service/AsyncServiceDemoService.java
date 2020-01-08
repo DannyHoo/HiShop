@@ -7,7 +7,7 @@ import com.danny.hishop.framework.model.result.ServiceResult;
  * @email yuyang.hu@opay-inc.com
  * @date 2020/1/7下午9:20
  */
-public interface DemoService {
+public interface AsyncServiceDemoService {
 
     ServiceResult asyncRequest();
 }

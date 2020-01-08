@@ -3,7 +3,7 @@ package com.danny.hishop.gateway.controller;
 import com.alibaba.fastjson.JSON;
 import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
-import com.danny.hishop.gateway.service.DemoService;
+import com.danny.hishop.gateway.service.AsyncServiceDemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +29,10 @@ import java.util.concurrent.Callable;
 @RestController
 @RequestMapping("/demo")
 @Slf4j
-public class DemoController {
+public class AsyncRequestDemoController {
 
     @Autowired
-    private DemoService demoService;
+    private AsyncServiceDemoService asyncServiceDemoService;
 
     /**
      * 方式一：Servelt实现异步请求
@@ -77,7 +77,7 @@ public class DemoController {
                 public void run() {
                     try {
                         System.out.println("内部线程：" + Thread.currentThread().getName());
-                        ServiceResult serviceResult = demoService.asyncRequest();
+                        ServiceResult serviceResult = asyncServiceDemoService.asyncRequest();
                         ServletResponse servletResponse = asyncContext.getResponse();
                         servletResponse.setCharacterEncoding("utf-8");
                         servletResponse.setContentType("application/json;charset=UTF-8");
@@ -110,7 +110,7 @@ public class DemoController {
         return new Callable<Response>() {
             @Override
             public Response call() throws Exception {
-                ServiceResult serviceResult = demoService.asyncRequest();
+                ServiceResult serviceResult = asyncServiceDemoService.asyncRequest();
                 Response responseResult = Response.build(serviceResult);
                 return responseResult;
             }
@@ -132,7 +132,7 @@ public class DemoController {
             @Override
             public Response call() throws Exception {
                 log.info("内部线程开始：", Thread.currentThread().getName());
-                ServiceResult serviceResult = demoService.asyncRequest();
+                ServiceResult serviceResult = asyncServiceDemoService.asyncRequest();
                 Response responseResult = Response.build(serviceResult);
                 log.info("内部线程结束：", Thread.currentThread().getName());
                 return responseResult;
