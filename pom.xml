@@ -20,9 +20,9 @@
         <module>register</module>
         <module>framework</module>
         <module>business</module>
-        <module>management</module>
         <module>mockclient</module>
         <module>gateway</module>
+        <module>management</module>
     </modules>
 
     <properties>

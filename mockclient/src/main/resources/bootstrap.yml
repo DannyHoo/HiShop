@@ -38,15 +38,30 @@ feign:
   hystrix:
     enabled: true
 
+
 hystrix:
   command:
     default:
       execution:
-        #isolation:
-        #thread:
-        #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
+        isolation:
+          strategy: SEMAPHORE  #could not acquire a semaphore for execution https://blog.csdn.net/qq_43599835/article/details/86511070
+          semaphore:
+            maxSemaphores: 100
+            #thread:
+            #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
         timeout:
           enabled: false #hystrix从不超时
+      fallback:
+        isolation:
+          strategy: semaphore #配置断路器中的隔离策略为信号量
+          semaphore:
+            maxConcurrentRequests: 100  #配置断路器中的信号量大小，默认10，太小了再并发较高的情况下会报 HystrixRuntimeException:fallback execution rejected
+  threadpool:
+    default:
+      coreSize: 100 #并发执行的最大线程数，默认10，并发大于10时，请求线程会报错：java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@460d14a1 rejected from java.util.concurrent.ThreadPoolExecutor@3876c0f2[Running, pool size = 4, active threads = 4, queued tasks = 0, completed tasks = 0]
+      maxQueuedSize: 1000 #BlockingQueue的最大队列数，默认-1
+      queueSizeRejectionThreshold: 1000 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝，默认值5
+
 
 # 监控配置
 management:
@@ -66,6 +81,6 @@ config:
     gateway:
       host: localhost:8200/
     aggregation:
-      host: localhost:8311/
+      host: 10.249.254.246:8311/
 
 

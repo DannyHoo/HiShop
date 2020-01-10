@@ -1,0 +1,50 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: hishop-management
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://140.143.158.164:8000/
+      label: master
+      profile: dev
+      name: ${spring.application.name},common,redis
+feign:
+  client:
+    config:
+      hishop-user: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 5000
+        readTimeout: 5000
+      hishop-goods: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 5000
+        readTimeout: 5000
+      hishop-order: #具体服务超时配置，FeignClient的value，区分大小写
+        connectTimeout: 5000
+        readTimeout: 5000
+  #开启hystrix
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        #isolation:
+          #thread:
+            #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
+        timeout:
+          enabled: false #hystrix从不超时
+
+# 监控配置
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #exclude: beans #不暴露beans端点

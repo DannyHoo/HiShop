@@ -21,6 +21,7 @@ public class GatewayFallbackFactory implements FallbackFactory<GatewayFeignClien
 
             @Override
             public JSONObject createOrder(JSONObject json) {
+                throwable.printStackTrace();
                 log.info("GatewayFallback.createOrder {} params:{}", ResultStatusEnum.SERVICE_FUSE_OPEN.getCode(),json);
                 return new JSONObject();
             }

@@ -1,6 +1,7 @@
 package com.danny.hishop.mockclient.feign;
 
 import com.alibaba.fastjson.JSONObject;
+import com.danny.hishop.mockclient.fallback.GatewayFallback;
 import com.danny.hishop.mockclient.fallback.GatewayFallbackFactory;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @email yuyang.hu@opay-inc.com
  * @date 2020/1/6下午5:32
  */
-@FeignClient(name = "gatewayFeignClient", url = "${config.hishop.gateway.host}",fallbackFactory = GatewayFallbackFactory.class)
+@FeignClient(name = "gatewayFeignClient", url = "${config.hishop.gateway.host}", fallbackFactory = GatewayFallbackFactory.class)
 public interface GatewayFeignClient {
 
     /**
