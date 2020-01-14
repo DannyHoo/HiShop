@@ -28,20 +28,20 @@ management:
 #zuul默认使用:信号量(semaphore)
 #hystrix默认使用:线程池 (thread)
 zuul:
+  #路由配置
   routes:
     hishop-aggregation: /api/aggregation/**
     hishop-goods: /api/goods/**
     hishop-order: /api/order/**
     hishop-user: /api/user/**
     hishop-management: /api/management/**
-  #统一入口为上面的配置，其他入口忽略
-  ignored-patterns: /hishop-*/**
-  #忽略整个服务，对外提供接口
-  #ignored-services: hishop-order
-  #配置隔离策略为信号量semaphore /线程thread
-  ribbon-isolation-strategy: semaphore #could not acquire a semaphore for execution and no fallback available https://github.com/spring-cloud/spring-cloud-netflix/issues/2064
+  ignored-patterns: /hishop-*/** #统一入口为上面的配置，其他入口忽略
+  #ignored-services: hishop-order #忽略整个服务，对外提供接口
+
+  #配置zuul隔离策略，信号量semaphore(默认)/线程thread
+  ribbon-isolation-strategy: semaphore
   semaphore:
-    max-semaphores: 100 #配置信号量大小
+    max-semaphores: 100 #信号量大小 默认100 #could not acquire a semaphore for execution and no fallback available https://github.com/spring-cloud/spring-cloud-netflix/issues/2064
 
   #需要配置host和ribbon的超时时间，否则会异常Hystrix Readed time out（SendErrorFilter类的80行）https://my.oschina.net/zhongwenhao/blog/3089219
   host:

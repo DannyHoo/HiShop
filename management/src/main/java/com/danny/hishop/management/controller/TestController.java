@@ -26,7 +26,7 @@ public class TestController {
         try {
             System.out.println("request[/test/gateway] param["+JSON.toJSONString(param)+"]");
             //log.info("request[{}] param[{}]", "/test/gateway", JSON.toJSONString(param));
-            Thread.sleep(new Random().nextInt(5));
+            Thread.sleep((int)(Math.random()*4999)+3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
