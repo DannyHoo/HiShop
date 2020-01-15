@@ -41,7 +41,7 @@ zuul:
   #配置zuul隔离策略，信号量semaphore(默认)/线程thread
   ribbon-isolation-strategy: semaphore
   semaphore:
-    max-semaphores: 100 #信号量大小 默认100 #could not acquire a semaphore for execution and no fallback available https://github.com/spring-cloud/spring-cloud-netflix/issues/2064
+    max-semaphores: 5000 #信号量大小 默认100 #could not acquire a semaphore for execution and no fallback available https://github.com/spring-cloud/spring-cloud-netflix/issues/2064
 
   #需要配置host和ribbon的超时时间，否则会异常Hystrix Readed time out（SendErrorFilter类的80行）https://my.oschina.net/zhongwenhao/blog/3089219
   host:

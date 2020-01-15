@@ -41,7 +41,7 @@ public class AggregationFeignClientTest extends MockClientApplicationTests {
      * {"orderDetailDTOList":[{"goodsNo":"G20180614161040114149","goodsNum":1}],"userDTO":{"userName":"82Z76oIu"}}
      */
     @Test
-    public void createOrderTest() throws InterruptedException {
+    public void createOrderByMockClientTest() throws InterruptedException {
         final AtomicInteger atomicInteger=new AtomicInteger(0);
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
@@ -53,6 +53,9 @@ public class AggregationFeignClientTest extends MockClientApplicationTests {
                         printResult(jsonObject);
                         if (jsonObject.getInteger("code")==100000){
                             atomicInteger.addAndGet(1);
+                        }else{
+                            System.out.println("ERROR:");
+                            System.out.println(JSON.toJSONString(jsonObject));
                         }
                     } catch (Exception e) {
                     }
@@ -60,56 +63,6 @@ public class AggregationFeignClientTest extends MockClientApplicationTests {
             }
         });
         executor.start(50);
-        System.out.println("success count:"+atomicInteger.get());
-    }
-
-    @Test
-    public void createOrderTest1() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
-        Executor executor = new Executor(new ExecutorInterface() {
-            @Override
-            public void executeJob(){
-                for (int i = 0; i < 1; i++) {
-                    JSONObject param = getJSONObject();
-                    String result = "";
-                    try {
-                        result= HttpClientUtils.doPost("http://10.249.254.246:8311/order/create", param, 180000);
-                        printResult(result);
-                        JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==100000){
-                            atomicInteger.addAndGet(1);
-                        }
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        });
-        executor.start(90);
-        System.out.println("success count:"+atomicInteger.get());
-    }
-
-    @Test
-    public void createOrderTest2() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
-        Executor executor = new Executor(new ExecutorInterface() {
-            @Override
-            public void executeJob(){
-                for (int i = 0; i < 1; i++) {
-                    JSONObject param = getJSONObject();
-                    String result = "";
-                    try {
-                        result= HttpClientUtils.doPost("http://localhost:8200/api/management/test/gateway", param, 180000);
-                        printResult(result);
-                        JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==100000){
-                            atomicInteger.addAndGet(1);
-                        }
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        });
-        executor.start(100);
         System.out.println("success count:"+atomicInteger.get());
     }
 
