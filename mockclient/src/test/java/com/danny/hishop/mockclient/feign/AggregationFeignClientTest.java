@@ -62,7 +62,7 @@ public class AggregationFeignClientTest extends MockClientApplicationTests {
                 }
             }
         });
-        executor.start(50);
+        executor.start(1);
         System.out.println("success count:"+atomicInteger.get());
     }
 

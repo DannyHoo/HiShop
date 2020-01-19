@@ -6,6 +6,7 @@ import com.danny.hishop.framework.util.http.HttpClientUtils;
 import com.danny.hishop.framework.util.test.Executor;
 import com.danny.hishop.framework.util.test.ExecutorInterface;
 import com.danny.hishop.mockclient.MockClientApplicationTests;
+import com.google.gson.JsonObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -62,7 +63,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                 }
             }
         });
-        executor.start(1000);
+        executor.start(1);
         System.out.println("success count:"+atomicInteger.get());
 
     }
@@ -78,7 +79,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://10.249.201.159:8200/api/aggregation/order/create", param, 180000);
+                        result= HttpClientUtils.doPost("http://10.249.254.246:8200/api/aggregation/order/create", param, 180000);
                         printResult(result);
                         JSONObject jsonObject= JSON.parseObject(result);
                         if (jsonObject.getInteger("code")==100000){
@@ -88,6 +89,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                             System.out.println(result);
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -117,6 +119,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                             System.out.println(result);
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -133,23 +136,31 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
             public void executeJob(){
                 for (int i = 0; i < 1; i++) {
                     JSONObject param = getCreateOrderParam();
+                    JSONObject riskParam=new JSONObject();
+                    riskParam.put("request_id","20ij2ef9j20ef92jf02");
+                    riskParam.put("group_code","CO-10000001");
+                    riskParam.put("user_id","999");
+                    riskParam.put("user_device_id","32023j23234o23");
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://localhost:8200/api/management/test/gateway", param, 180000);
+                        result= HttpClientUtils.doPost("http://10.249.254.246:8200/api/management/test/gateway", param, 180000);
+                        //result= HttpClientUtils.doPost("http://10.249.201.159:8200/api/management/test/gateway", param, 180000);
+                        //result= HttpClientUtils.doPost("http://localhost:8070/opos/rc/verify", riskParam, 180000);
                         printResult(result);
                         JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==100000){
+                        if (jsonObject.getInteger("code")==200){
                             atomicInteger.addAndGet(1);
                         }else{
                             System.out.println("ERROR:");
                             System.out.println(result);
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         });
-        executor.start(100);
+        executor.start(400);
         System.out.println("success count:"+atomicInteger.get());
     }
 

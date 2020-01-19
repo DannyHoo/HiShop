@@ -82,7 +82,7 @@ config:
     common:
       host: localhost:8080/
     gateway:
-      host: localhost:8200/
+      host: 10.249.254.246:8200/
     aggregation:
       host: 10.249.254.246:8311/
 

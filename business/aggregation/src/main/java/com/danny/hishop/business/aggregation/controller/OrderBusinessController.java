@@ -38,7 +38,7 @@ public class OrderBusinessController {
      * @return
      */
     @RequestMapping("/create")
-    public Response createOrderSync(HttpServletRequest httpServletRequest, @RequestBody CreateOrderParameter createOrderParameter) {
+    public Response createOrder(HttpServletRequest httpServletRequest, @RequestBody CreateOrderParameter createOrderParameter) {
         ServiceResult result = orderBusinessService.createOrder(createOrderParameter);
         return Response.build(result);
     }

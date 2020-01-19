@@ -1,6 +1,7 @@
 package com.danny.hishop.business.aggregation.service;
 
 
+import com.alibaba.fastjson.JSON;
 import com.danny.hishop.business.aggregation.feign.goods.GoodsService;
 import com.danny.hishop.business.aggregation.feign.order.OrderService;
 import com.danny.hishop.business.aggregation.model.goods.dto.GoodsDTO;
@@ -21,6 +22,7 @@ import com.danny.hishop.framework.mq.MQProducer;
 import com.danny.hishop.framework.util.BeanUtil;
 import com.danny.hishop.framework.util.ListUtil;
 import com.danny.hishop.framework.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Created on 2018-12-21 16:01:41
  */
 @Service("orderBusinessService")
+@Slf4j
 public class OrderBusinessServiceImpl implements OrderBusinessService {
 
     @Autowired
@@ -63,6 +66,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
             return new ServiceResult<>(ResultStatusEnum.USER_ADDRESS_NOT_EXIST);
         }
         addressDTO = addressDTOResponse.getData().get(0);
+        log.info("查询收货人信息完成 addressDTO[{}]", JSON.toJSONString(addressDTO));
 
         /* 远程调用 更新商品库存 */
         String orderNo = "OD" + StringUtil.getRandomTimeStr();
@@ -83,11 +87,16 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
             }
             orderDetailDTO.setActualPrice(orderDetailDTO.getActualPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getNowPrice())));
             orderDetailDTO.setTotalPrice(orderDetailDTO.getTotalPrice().add(new BigDecimal(orderDetailDTO.getGoodsNum()).multiply(goodsDTO.getOriginPrice())));
+            log.info("校验商品信息完成[{}] goodsNo[{}]", goodsDTO.getGoodsNo());
+
             //远程调用更新库存
-            Response<Boolean> saveGoodsResponse = goodsService.updateGoods(BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class).setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
+            Response<Boolean> saveGoodsResponse = goodsService.updateGoods(
+                    BeanUtil.convertIgnoreNullProperty(goodsDTO, GoodsParameter.class)
+                            .setBalance(goodsDTO.getBalance() - orderDetailDTO.getGoodsNum()));
             if (saveGoodsResponse.isFail() || !Boolean.TRUE.equals(saveGoodsResponse.getData())) {
                 return new ServiceResult<>(ResultStatusEnum.GOODS_BALANCE_UPDATE_FAILURE);
             }
+            log.info("更新商品库存完成[{}] goodsNo[{}] goodsNum[{}]", goodsDTO.getGoodsNo(), goodsDTO.getBalance() - orderDetailDTO.getGoodsNum());
         }
         //加锁结束
         lock.unlock();
@@ -117,11 +126,13 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
 
         /* 远程调用 订单入库 */
         Response<OrderDTO> saveOrderResult = orderService.saveOrder(orderParameter);
+        log.info("保存订单完成 saveOrderResult[{}] orderNo[{}]", saveOrderResult.getCode(), saveOrderResult.getData() == null ? null : saveOrderResult.getData().getOrderNo());
 
         /* 远程调用 订单详情入库 */
         Response<List<OrderDetailDTO>> saveOrderDetailResult = orderService.saveOrderDetailList(new OrderDetailListParameter().setOrderDetailDTOList(orderDetailDTOList));
+        log.info("保存订单明细完成 saveOrderDetailResult[{}] orderDetailCount[{}]", saveOrderDetailResult.getCode(), saveOrderDetailResult.getData() == null ? null : saveOrderDetailResult.getData().size());
 
-        return new ServiceResult<String>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。",orderNo);
+        return new ServiceResult<String>(ResultStatusEnum.SUCCESS, "下单成功，正在生成订单，稍后请注意查询。", orderNo);
     }
 
     private void initOrderDetailDTOList(List<OrderDetailDTO> orderDetailDTOList, String orderNo) {
