@@ -31,11 +31,6 @@ public class AddressController {
     @RequestMapping(value = "/getByUserName/{userName}", method = RequestMethod.GET)
     public Response getByUserName(@PathVariable String userName) {
         ServiceResult<List<AddressDTO>> result = addressService.findByUserNameAndIsDefault(new AddressParameter().setUserName(userName).setIsDefault(YesNoEnum.YES.getCode()));
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return Response.build(result);
     }
 

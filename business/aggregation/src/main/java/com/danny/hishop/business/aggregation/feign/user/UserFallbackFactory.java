@@ -26,12 +26,14 @@ public class UserFallbackFactory implements FallbackFactory<UserService> {
         return new UserService() {
             @Override
             public Response<List<AddressDTO>> getAddressByUserName(String userName) {
+                throwable.printStackTrace();
                 log.info("UserFallbackFactory.getAddressByUserName fallback; reason was:" + throwable.getMessage());
                 return Response.build(ResultStatusEnum.SERVICE_FUSE_OPEN.getCode(), "hystrix:", new ArrayList<>());
             }
 
             @Override
             public Response<UserDTO> getUserByUserName(String userName) {
+                throwable.printStackTrace();
                 log.info("UserFallbackFactory.getUserByUserNamefallback; reason was:" + throwable.getMessage());
                 return Response.build(ResultStatusEnum.SERVICE_FUSE_OPEN.getCode(), "hystrix:", new UserDTO());
             }

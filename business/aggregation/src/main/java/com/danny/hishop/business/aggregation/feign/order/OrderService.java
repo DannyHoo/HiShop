@@ -16,7 +16,7 @@ import java.util.List;
  * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午10:09
  */
-@FeignClient(value = "hishop-order", fallback = OrderFallback.class, fallbackFactory = OrderFallbackFactory.class)
+@FeignClient(value = "hishop-order",fallbackFactory = OrderFallbackFactory.class)
 public interface OrderService {
 
     @PostMapping("/order/order/save")
