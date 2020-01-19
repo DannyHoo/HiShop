@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午6:14
  */
-@FeignClient(value = "hishop-goods", fallback = GoodsFallback.class,fallbackFactory = GoodsFallbackFactory.class)
+@FeignClient(value = "hishop-goods", fallbackFactory = GoodsFallbackFactory.class)
 public interface GoodsService {
 
     @GetMapping("/goods/goods/getByGoodsNo/{goodsNo}")
