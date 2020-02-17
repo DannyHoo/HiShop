@@ -62,6 +62,7 @@ public class Executor {
 
     public Thread addCallable(int index) {
         Callable<Long> callable = new Callable<Long>() {
+            @Override
             public Long call() throws Exception {
                 cyclicBarrier.await();
                 long startTime = System.currentTimeMillis();
@@ -85,7 +86,9 @@ public class Executor {
                     long temp = args[j - 1];
                     args[j - 1] = args[j];
                     args[j] = temp;
-                } else break;
+                } else {
+                    break;
+                }
             }
         }
         return args;

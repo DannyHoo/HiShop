@@ -1,4 +1,4 @@
-package com.danny.hishop.framework.util;
+package com.danny.hishop.framework.util.snowflake;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
@@ -199,12 +199,12 @@ public class SnowFlakeUtils {
         System.out.println(makerUtils.nextId());
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SnowFlakeUtils makerUtils = new SnowFlakeUtils(0,0);
         for (int i = 0;i<10;i++){
             long id = makerUtils.nextId();
             System.out.println(Long.toBinaryString(id));
             System.out.println(id);
         }
-    }*/
+    }
 }

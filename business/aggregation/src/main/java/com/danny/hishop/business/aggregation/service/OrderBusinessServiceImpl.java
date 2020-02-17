@@ -11,14 +11,13 @@ import com.danny.hishop.business.aggregation.model.order.dto.OrderDetailDTO;
 import com.danny.hishop.business.aggregation.model.order.param.CreateOrderParameter;
 import com.danny.hishop.business.aggregation.model.order.param.OrderDetailListParameter;
 import com.danny.hishop.business.aggregation.model.order.param.OrderParameter;
-import com.danny.hishop.business.aggregation.model.result.order.CreateOrderResult;
 import com.danny.hishop.business.aggregation.model.user.dto.AddressDTO;
 import com.danny.hishop.business.aggregation.model.user.dto.UserDTO;
 import com.danny.hishop.business.aggregation.feign.user.UserService;
 import com.danny.hishop.framework.model.enums.ResultStatusEnum;
 import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
-import com.danny.hishop.framework.mq.MQProducer;
+import com.danny.hishop.framework.cache.redis.RedisCacheUtils;
 import com.danny.hishop.framework.util.BeanUtil;
 import com.danny.hishop.framework.util.ListUtil;
 import com.danny.hishop.framework.util.StringUtil;
@@ -49,6 +48,9 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private RedisCacheUtils redisCacheUtils;
 
     private static final Lock lock = new ReentrantLock();
 
