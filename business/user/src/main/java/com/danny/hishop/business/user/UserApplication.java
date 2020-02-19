@@ -1,5 +1,6 @@
 package com.danny.hishop.business.user;
 
+import com.danny.hishop.framework.util.snowflake.autoconfigure.annotation.EnableSnowflake;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -17,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients //启用feign客户端
 @EnableHystrixDashboard //启动hystrix控制台
 @EnableCircuitBreaker //启动断路器
+@EnableSnowflake
 public class UserApplication {
 
     public static void main(String[] args) {

@@ -12,6 +12,7 @@
     <artifactId>framework</artifactId>
 
     <dependencies>
+        <!-- Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -21,6 +22,26 @@
             <artifactId>redisson</artifactId>
             <version>3.7.5</version>
         </dependency>
+
+        <!-- ElasticSearch -->
+        <!-- spring-boot-starter-data-elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <!-- elasticsearch原生api操作 https://www.cnblogs.com/hetutu-5238/p/9518439.html -->
+        <!--<dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>6.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>6.4.3</version>
+        </dependency>-->
+
+        <!-- 工具包 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -53,6 +74,7 @@
             <version>2.6</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
 

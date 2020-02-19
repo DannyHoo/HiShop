@@ -4,6 +4,7 @@ import com.danny.hishop.framework.model.dto.BaseDTO;
 import com.danny.hishop.framework.model.model.BaseDO;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * @author huyuyang
@@ -12,6 +13,8 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
+
+@Document(indexName = "hishop", type = "user")
 public class UserDTO extends BaseDTO {
     private String userName;
     private String mobileNo;

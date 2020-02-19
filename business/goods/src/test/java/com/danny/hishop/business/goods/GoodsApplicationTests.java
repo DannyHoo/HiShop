@@ -13,8 +13,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GoodsApplication.class)
 public class GoodsApplicationTests {
-    protected static void printResult(Object result){
-        System.out.println(JSON.toJSONString(result));
+
+    protected static void printResult(Object... result) {
+        for (Object object : result) {
+            if (object == null) {
+                System.out.println("null");
+            } else if (object instanceof String) {
+                System.out.println(object);
+            } else {
+                System.out.println(JSON.toJSONString(object));
+            }
+        }
     }
 
 }
