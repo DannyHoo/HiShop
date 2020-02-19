@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/18下午5:35
  */
 @Configuration

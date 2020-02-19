@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/1/6下午5:32
  */
 @FeignClient(name = "gatewayFeignClient", url = "${config.hishop.gateway.host}", fallbackFactory = GatewayFallbackFactory.class)

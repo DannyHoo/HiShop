@@ -23,7 +23,6 @@ import java.util.concurrent.Callable;
  * SpringBoot中异步请求和异步调用 https://www.cnblogs.com/baixianlong/p/10661591.html
  *
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/1/6下午9:45
  */
 @RestController

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午6:16
  */
 @Component

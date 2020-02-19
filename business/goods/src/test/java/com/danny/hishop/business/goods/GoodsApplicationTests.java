@@ -7,7 +7,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/12/26下午5:46
  */
 @RunWith(SpringRunner.class)

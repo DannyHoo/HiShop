@@ -15,7 +15,6 @@ import java.util.List;
  * 熔断优先级：fallback>fallbackFactory
  *
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/23下午10:15
  */
 @Component

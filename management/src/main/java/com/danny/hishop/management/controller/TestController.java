@@ -13,7 +13,6 @@ import java.util.Random;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/1/10下午5:08
  */
 @RestController

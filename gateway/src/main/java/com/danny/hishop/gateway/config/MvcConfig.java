@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/12/31下午6:09
  */
 @Configuration

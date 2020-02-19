@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午3:12
  */
 @Slf4j

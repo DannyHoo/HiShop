@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/12/18下午5:01
  */
 public class OrderBusinessServiceImplTest extends AggregationApplicationTests {

@@ -6,7 +6,6 @@ import java.util.concurrent.*;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/26下午5:38
  */
 public class Executor {

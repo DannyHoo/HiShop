@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/26下午5:50
  */
 @SpringBootApplication

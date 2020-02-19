@@ -14,7 +14,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/10/30下午6:11
  */
 @Configuration

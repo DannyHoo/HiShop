@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/13下午3:03
  */
 public class RedisCacheUtilsTest extends AggregationApplicationTests {

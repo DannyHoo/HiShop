@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/1/7下午9:20
  */
 @Service

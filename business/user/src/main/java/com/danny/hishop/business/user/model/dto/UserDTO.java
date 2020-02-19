@@ -8,7 +8,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/26下午9:41
  */
 @Data

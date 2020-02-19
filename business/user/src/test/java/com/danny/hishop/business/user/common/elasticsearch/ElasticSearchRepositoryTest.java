@@ -21,7 +21,6 @@ import java.util.Optional;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/18下午5:06
  */
 public class ElasticSearchRepositoryTest extends UserApplicationTests {

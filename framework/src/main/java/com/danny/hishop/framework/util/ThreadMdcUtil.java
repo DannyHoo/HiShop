@@ -8,7 +8,6 @@ import java.util.concurrent.Callable;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/6下午2:58
  */
 public class ThreadMdcUtil {

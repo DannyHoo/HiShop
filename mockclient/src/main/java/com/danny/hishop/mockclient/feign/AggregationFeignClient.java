@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/1/6下午5:32
  */
 @FeignClient(name = "aggregationFeignClient", url = "${config.hishop.aggregation.host}")

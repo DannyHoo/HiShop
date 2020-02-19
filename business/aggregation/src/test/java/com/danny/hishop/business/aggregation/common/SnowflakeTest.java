@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/17下午2:31
  */
 public class SnowflakeTest extends AggregationApplicationTests {

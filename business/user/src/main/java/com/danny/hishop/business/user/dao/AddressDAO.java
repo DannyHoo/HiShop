@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/26下午9:37
  */
 @Mapper

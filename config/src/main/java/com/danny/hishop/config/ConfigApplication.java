@@ -6,7 +6,6 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/14下午9:00
  */
 @SpringBootApplication

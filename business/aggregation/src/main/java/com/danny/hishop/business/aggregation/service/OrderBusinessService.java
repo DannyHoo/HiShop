@@ -6,7 +6,6 @@ import com.danny.hishop.framework.model.result.ServiceResult;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午10:14
  */
 public interface OrderBusinessService {

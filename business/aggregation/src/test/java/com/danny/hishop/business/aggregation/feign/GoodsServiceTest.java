@@ -16,7 +16,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/25下午2:04
  */
 public class GoodsServiceTest extends AggregationApplicationTests {

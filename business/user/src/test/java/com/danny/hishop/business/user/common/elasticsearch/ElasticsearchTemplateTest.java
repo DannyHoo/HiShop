@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/19上午10:40
  */
 public class ElasticsearchTemplateTest extends UserApplicationTests {

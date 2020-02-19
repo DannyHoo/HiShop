@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/19下午8:07
  */
 @Slf4j

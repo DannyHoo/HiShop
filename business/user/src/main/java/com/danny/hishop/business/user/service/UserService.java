@@ -7,7 +7,6 @@ import com.danny.hishop.framework.model.result.ServiceResult;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/26下午9:18
  */
 public interface UserService {

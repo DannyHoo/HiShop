@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/12/19下午2:35
  */
 @Configuration

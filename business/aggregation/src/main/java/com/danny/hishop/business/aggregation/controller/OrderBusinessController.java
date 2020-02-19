@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/12/28上午11:12
  */
 @RestController

@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2019/11/29下午10:12
  */
 @Component

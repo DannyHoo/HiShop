@@ -6,7 +6,6 @@ import java.util.Date;
 
 /**
  * @author huyuyang
- * @email yuyang.hu@opay-inc.com
  * @date 2020/2/13下午5:27
  */
 public class MemCacheUtils implements ICache {
