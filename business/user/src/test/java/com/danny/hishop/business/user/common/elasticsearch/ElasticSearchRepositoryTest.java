@@ -19,10 +19,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author huyuyang
- * @date 2020/2/18下午5:06
- */
 public class ElasticSearchRepositoryTest extends UserApplicationTests {
 
     @Autowired
@@ -74,7 +70,7 @@ public class ElasticSearchRepositoryTest extends UserApplicationTests {
 
     private UserDTO getUser() {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserName(StringUtil.getStringRandom(32))
+        userDTO.setUserName(StringUtil.getStringRandom(12))
                 .setPassword(StringUtil.getRandomNum(6))
                 .setRealName(RandomValueUtil.getEmail(6, 10))
                 .setMobileNo("1" + StringUtil.getRandomNum(10))

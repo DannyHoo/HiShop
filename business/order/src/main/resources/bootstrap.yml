@@ -11,7 +11,7 @@ spring:
       uri: http://140.143.158.164:8000/
       label: master
       profile: dev
-      name: ${spring.application.name},common,redis
+      name: ${spring.application.name},common,redis,elasticsearch,rocketmq
 
 # 监控配置
 management:
