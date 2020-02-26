@@ -11,12 +11,7 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 import java.util.List;
 
-/**
- * @author huyuyang
- * @date 2020/2/19上午10:40
- */
 public class ElasticsearchTemplateTest extends UserApplicationTests {
-
 
     //依赖 spring-boot-starter-data-elasticsearch
     @Autowired
@@ -24,10 +19,12 @@ public class ElasticsearchTemplateTest extends UserApplicationTests {
 
     @Test
     public void elasticsearchTemplateTest() {
+        elasticsearchTemplate.deleteIndex("hishop-user-address");
+//        elasticsearchTemplate.deleteIndex("order");
         //elasticsearchTemplate.createIndex("hishop");//创建index/database
-        SearchQuery searchQuery = new NativeSearchQuery(QueryBuilders.matchAllQuery());
-        List<UserDTO> users = elasticsearchTemplate.queryForList(searchQuery, UserDTO.class);
-        System.out.println(users.toString());
+//        SearchQuery searchQuery = new NativeSearchQuery(QueryBuilders.matchAllQuery());
+//        List<UserDTO> users = elasticsearchTemplate.queryForList(searchQuery, UserDTO.class);
+//        System.out.println(users.toString());
     }
 
 

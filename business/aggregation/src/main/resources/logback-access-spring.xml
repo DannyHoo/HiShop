@@ -6,7 +6,7 @@
     <!-- properties 配置 -->
     <springProperty scope="context" name="applicationName" source="spring.application.name"/>
 
-    <property name="log.path" value="/data/log/opos-marketing"/>
+    <property name="log.path" value="/data/log/hishop"/>
 
     <!--appender规则-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">

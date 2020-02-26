@@ -13,6 +13,16 @@ spring:
       profile: dev
       name: ${spring.application.name},common,redis
 
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 52.18.233.233:9300
+      repositories:
+        enabled: true
+  elasticsearch:
+    rest:
+      uris: ["http://52.18.233.233:9200"]
+
 # 监控配置
 management:
   endpoint:
