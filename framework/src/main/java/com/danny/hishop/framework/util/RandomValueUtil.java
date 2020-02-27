@@ -1,7 +1,10 @@
 package com.danny.hishop.framework.util;
 
+import org.apache.commons.lang.RandomStringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author
@@ -108,6 +111,26 @@ public class RandomValueUtil {
         for (int i = 0; i < 100; i++) {
             System.out.println(getAddress().get("road"));
             //System.out.println(getEmailName(6,9));
+        }
+    }
+
+    public static void main1(String[] args) {
+        System.out.println(randomString());
+        System.out.println(RandomString.getRandomChar());
+    }
+
+    // use apache common library
+    private static String randomString() {
+        return RandomStringUtils.random(20, 0x4e00, 0x9fa5, false, false);
+    }
+
+    // custom method
+    private static class RandomString {
+        private static final int BASE_RANDOM = 0x9fa5 - 0x4e00 + 1;
+        private static Random random = new Random();
+
+        private static char getRandomChar() {
+            return (char) (0x4e00 + random.nextInt(BASE_RANDOM));
         }
     }
 }
