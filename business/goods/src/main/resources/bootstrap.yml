@@ -16,12 +16,14 @@ spring:
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 52.18.233.233:9300
+      #cluster-nodes: 52.18.233.233:9300
+      cluster-nodes: 140.143.158.164:9300
       repositories:
         enabled: true
   elasticsearch:
     rest:
-      uris: ["http://52.18.233.233:9200"]
+      uris: ["http://140.143.158.164:9200"]
+      #uris: ["http://52.18.233.233:9200"]
 
 # 监控配置
 management:

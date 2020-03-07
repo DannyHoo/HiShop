@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class ElasticSearchRepositoryTest extends GoodsApplicationTests {
 
@@ -72,6 +69,66 @@ public class ElasticSearchRepositoryTest extends GoodsApplicationTests {
                 .setCreateTime(DateUtils.getNowDate())
                 .setUpdateTime(DateUtils.getNowDate());
         return goodsDocument;
+    }
+
+
+    @Test
+    public void saveTest2() throws IOException {
+        StringBuffer stringBuffer=new StringBuffer();
+        int id=107;
+        //String[] keywords = new String[]{"手机", "衣服", "食品", "电脑", "母婴", "电器", "美妆", "男鞋", "女鞋"};
+        String[] keywords = new String[]{"衣服"};
+        for (int j = 0; j < keywords.length; j++) {
+            for (int i = 1; i < 2; i++) {
+                //https://search.jd.com/Search?keyword=%E6%89%8B%E6%9C%BA9
+                String url = "https://search.jd.com/Search?keyword=" + keywords[j] + "&enc=utf-8&psort=3&page=" + (i*2-1);//第二页商品
+                //String url = "https://search.jd.com/Search?keyword=" + keywords[j] + "&enc=utf-8&psort=3&page=" + i;//第二页商品
+                //String url = "https://search.jd.com/Search?keyword=衣服&enc=utf-8&psort=3&page="+i;//第二页商品
+                //网址分析
+                /*keyword:关键词（京东搜索框输入的信息）
+                 * enc：编码方式（可改动:默认UTF-8）
+                 * psort=3 //搜索方式  默认按综合查询 不给psort值
+                 * page=分业（不考虑动态加载时按照基数分业，每一页30条，这里就不演示动态加载）
+                 * 注意：受京东商品个性化影响，准确率无法保障
+                 * */
+                org.jsoup.nodes.Document doc = Jsoup.connect(url).maxBodySize(0).get();
+                //doc获取整个页面的所有数据
+                Elements ulList = doc.select("ul[class='gl-warp clearfix']");
+                Elements liList = ulList.select("li[class='gl-item']");
+                //循环liList的数据
+                for (Element item : liList) {
+                    //排除广告位置
+                    if (!item.select("span[class='p-promo-flag']").text().trim().equals("广告")) {
+                        String title=item.select("div[class='p-name p-name-type-2']").select("em").text();
+                        String price=item.select("div[class='p-price']").select("i").text();
+                        String image="https:"+item.select("div[class='p-img']").select("a").select("img").attr("source-data-lazy-img");
+
+                        stringBuffer.append("INSERT INTO `product` VALUES ('")
+                                .append(id++)
+                                .append("', '3', '")
+                                .append(title)
+                                .append("', '2', '这是衣服品牌', '', '")
+                                .append(image)
+                                .append("', '1', '这是供应商1', '")
+                                .append(price)
+                                .append("', '20.00', '323', '0', '0', '50.00', '200', '1', '")
+                                .append(DateUtils.getNewFormatDateString(new Date()))
+                                .append("', '")
+                                .append(DateUtils.getNewFormatDateString(new Date()))
+                                .append("', '0');")
+                                .append("\n");
+
+                        //如果向存到数据库和文件里请自行更改
+                        System.out.println(title+" "+price+" "+image);//打印商品标题到控制台
+                        list.add(item.select("div[class='p-name p-name-type-2']").select("em").text());
+                        GoodsDocument goodsInsertData = getGoods(item.select("div[class='p-name p-name-type-2']").select("em").text());
+                        GoodsDocument goodsInsertResult = goodsEsRepository.save(goodsInsertData);
+                    }
+                }
+            }
+            System.out.println("==================="+list.size());
+        }
+        System.out.println(stringBuffer.toString());
     }
 
     @Test

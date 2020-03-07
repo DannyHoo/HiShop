@@ -98,6 +98,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
     }
 
     //直接访问aggregation
+    //select (select count(*) from hishop_order.t_order) as orderNum ,(select count(*) from hishop_order.t_order_detail) as orderDetailNum
     @Test
     public void createOrderByAggregationTest() throws InterruptedException {
         final AtomicInteger atomicInteger=new AtomicInteger(0);
@@ -108,7 +109,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://10.249.254.246:8311/order/create", param, 180000);
+                        result= HttpClientUtils.doPost("http://172.20.10.2:8311/order/create", param, 180000);
                         printResult(result);
                         JSONObject jsonObject= JSON.parseObject(result);
                         if (jsonObject.getInteger("code")==100000){
@@ -123,7 +124,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                 }
             }
         });
-        executor.start(100);
+        executor.start(500);
         System.out.println("success count:"+atomicInteger.get());
     }
 

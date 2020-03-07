@@ -54,16 +54,18 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
           semaphore:
-            maxConcurrentRequests: 100
-            #thread:
-            #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
+            maxConcurrentRequests: 500
+          thread:
+            timeoutInMilliseconds: 120000 #hystrix超时时间，默认1秒
         timeout:
           enabled: false #hystrix从不超时
+      circuitBreaker:
+        sleepWindowInMilliseconds: 5000
       fallback:
         isolation:
           strategy: semaphore #配置断路器中的隔离策略为信号量
           semaphore:
-            maxConcurrentRequests: 100  #配置断路器中的信号量大小，默认10，太小了再并发较高的情况下会报 HystrixRuntimeException:fallback execution rejected
+            maxConcurrentRequests: 500  #配置断路器中的信号量大小，默认10，太小了再并发较高的情况下会报 HystrixRuntimeException:fallback execution rejected
   threadpool:
     default:
       coreSize: 100 #并发执行的最大线程数，默认10，并发大于10时，请求线程会报错：java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@460d14a1 rejected from java.util.concurrent.ThreadPoolExecutor@3876c0f2[Running, pool size = 4, active threads = 4, queued tasks = 0, completed tasks = 0]
