@@ -11,6 +11,7 @@ import com.danny.hishop.framework.mq.rocketmq.producer.RocketMQProducer;
 import com.danny.hishop.framework.util.RandomValueUtil;
 import com.danny.hishop.framework.util.test.Executor;
 import com.danny.hishop.framework.util.test.ExecutorInterface;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Slf4j
 public class MQTest extends AggregationApplicationTests {
 
     @Autowired
@@ -30,7 +32,7 @@ public class MQTest extends AggregationApplicationTests {
     public void sendMessageTest() throws InterruptedException, IOException, RemotingException, MQClientException, MQBrokerException {
         final AtomicInteger atomicInteger=new AtomicInteger(0);
 
-        for (int i=0;i<1000;i++){
+        for (int i=0;i<1;i++){
 
             Executor executor = new Executor(new ExecutorInterface() {
                 @Override
@@ -47,6 +49,7 @@ public class MQTest extends AggregationApplicationTests {
                     printResult("send succeed:",mqSendResult);
                 }
             });
+            log.info("dfdfdfd{}",111);
             executor.start(RandomValueUtil.getNum(1,5));
             Thread.currentThread().sleep(1500);
             System.out.println();

@@ -1,5 +1,7 @@
 package com.danny.hishop.framework.util.test;
 
+import com.danny.hishop.framework.util.ThreadMdcUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -64,10 +66,12 @@ public class Executor {
             @Override
             public Long call() throws Exception {
                 cyclicBarrier.await();
+                ThreadMdcUtil.setTraceIdIfAbsent();
                 long startTime = System.currentTimeMillis();
                 executorInterface.executeJob();
                 long endTime = System.currentTimeMillis();
                 long consumeTime = endTime - startTime;
+                ThreadMdcUtil.setTraceIdIfAbsent();
                 return consumeTime;
             }
         };

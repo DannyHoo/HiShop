@@ -19,7 +19,7 @@ import java.util.List;
 public interface OrderDetailDAO {
 
 
-    @Insert("insert into t_order_detail(orderNo,goodsNo,goodsNum,totalPrice,actualPrice,comment) values (#{orderNo},#{goodsNo},#{goodsNum},#{totalPrice},#{actualPrice},#{comment}")
+    @Insert("insert into t_order_detail(orderNo,goodsNo,goodsNum,totalPrice,actualPrice,comment) values (#{orderNo},#{goodsNo},#{goodsNum},#{totalPrice},#{actualPrice},#{comment})")
     @SelectKey(before = false, keyProperty = "id", resultType = Long.class, statementType = StatementType.STATEMENT, statement = "SELECT LAST_INSERT_ID() AS id")
     int insertOrderDetailDO(OrderDetailDO orderDetailDO);
 

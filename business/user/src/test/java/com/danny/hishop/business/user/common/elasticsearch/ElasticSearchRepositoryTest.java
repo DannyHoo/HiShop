@@ -78,7 +78,6 @@ public class ElasticSearchRepositoryTest extends UserApplicationTests {
      */
     @Test
     public void queryTest() {
-        addressEsRepository.deleteById(null);
         String userName = "DannyHoo";
         String mobileNo = "13579246810";
         String idCardNo = "130900199004091109";

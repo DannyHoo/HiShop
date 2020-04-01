@@ -1,5 +1,6 @@
 package com.danny.hishop.framework.util;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.MDC;
 
 import java.util.Map;
@@ -20,6 +21,13 @@ public class ThreadMdcUtil {
         if (MDC.get(LOG_TRACE_ID) == null) {
             MDC.put(LOG_TRACE_ID, UUID.randomUUID().toString().replaceAll("-", ""));
         }
+    }
+
+    /**
+     * 移除log trace id
+     */
+    public static void removeLogTraceId() {
+        MDC.remove(LOG_TRACE_ID);
     }
 
     public static <T> Callable<T> wrap(final Callable<T> callable, final Map<String, String> context) {

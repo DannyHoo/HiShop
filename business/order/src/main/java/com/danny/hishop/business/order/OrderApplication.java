@@ -7,6 +7,9 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author huyuyang
@@ -18,6 +21,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableHystrixDashboard //启动hystrix控制台
 @EnableCircuitBreaker //启动断路器
 @EnableSnowflake
+@EnableScheduling
+@EnableAsync //貌似没有也可以？
+@ComponentScan(basePackages = {"com.danny.hishop.business.order","com.danny.hishop.framework"})
 public class OrderApplication {
 
     public static void main(String[] args) {

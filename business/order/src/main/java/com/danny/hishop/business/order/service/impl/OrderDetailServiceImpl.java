@@ -11,6 +11,7 @@ import com.danny.hishop.framework.model.result.ServiceResult;
 import com.danny.hishop.framework.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,6 +37,13 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             return new ServiceResult<>(ResultStatusEnum.SUCCESS,BeanUtil.convertList(orderDetailDOList,OrderDetailDTO.class));
         }
         return new ServiceResult<>(ResultStatusEnum.FAILURE);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Throwable.class,propagation= Propagation.REQUIRES_NEW)
+    public OrderDetailDO saveOrderDetail(OrderDetailDO orderDetailDO) {
+        orderDetailDAO.insertOrderDetailDO(orderDetailDO);
+        return orderDetailDO;
     }
 
 }

@@ -8,6 +8,7 @@ import com.danny.hishop.business.user.service.AddressService;
 import com.danny.hishop.framework.model.enums.YesNoEnum;
 import com.danny.hishop.framework.model.response.Response;
 import com.danny.hishop.framework.model.result.ServiceResult;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,20 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
+    //@HystrixCommand(fallbackMethod = "hystrixGetByUserName")
     @RequestMapping(value = "/getByUserName/{userName}", method = RequestMethod.GET)
     public Response getByUserName(@PathVariable String userName) {
         ServiceResult<List<AddressDTO>> result = addressService.findByUserNameAndIsDefault(new AddressParameter().setUserName(userName).setIsDefault(YesNoEnum.YES.getCode()));
         return Response.build(result);
     }
 
+    /**
+     * getByUserName方法熔断处理
+     * @param userName
+     * @return
+     */
+    public Response hystrixGetByUserName(@PathVariable String userName) {
+        ServiceResult<List<AddressDTO>> result = addressService.findByUserNameAndIsDefault(new AddressParameter().setUserName(userName).setIsDefault(YesNoEnum.YES.getCode()));
+        return Response.build(result);
+    }
 }

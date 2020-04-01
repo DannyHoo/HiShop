@@ -2,6 +2,7 @@ package com.danny.hishop.mockclient.feign;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.danny.hishop.framework.util.RandomValueUtil;
 import com.danny.hishop.framework.util.http.HttpClientUtils;
 import com.danny.hishop.framework.util.test.Executor;
 import com.danny.hishop.framework.util.test.ExecutorInterface;
@@ -99,6 +100,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
 
     //直接访问aggregation
     //select (select count(*) from hishop_order.t_order) as orderNum ,(select count(*) from hishop_order.t_order_detail) as orderDetailNum
+    //SELECT t.create_second,count(t.id) FROM(SELECT t1.id,t1.createTime,DATE_FORMAT(t1.createTime,'%Y-%m-%d %H:%i:%S') create_second FROM hishop_order.t_order t1 ORDER BY t1.createTime ) AS t GROUP BY t.create_second ORDER BY t.create_second DESC;
     @Test
     public void createOrderByAggregationTest() throws InterruptedException {
         final AtomicInteger atomicInteger=new AtomicInteger(0);
@@ -109,7 +111,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://172.20.10.2:8311/order/create", param, 180000);
+                        result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
                         printResult(result);
                         JSONObject jsonObject= JSON.parseObject(result);
                         if (jsonObject.getInteger("code")==100000){
@@ -127,6 +129,60 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
         executor.start(500);
         System.out.println("success count:"+atomicInteger.get());
     }
+
+    @Test
+    public void createOrderByAggregationLoopTest() throws InterruptedException {
+        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        for (int i = 0; i < 100000; i++) {
+            JSONObject param = getCreateOrderParam();
+            String result = "";
+            try {
+                result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
+                printResult(result);
+                JSONObject jsonObject= JSON.parseObject(result);
+                if (jsonObject.getInteger("code")==100000){
+                    atomicInteger.addAndGet(1);
+                }else{
+                    System.out.println("ERROR:");
+                    System.out.println(result);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("success count:"+atomicInteger.get());
+        }
+    }
+
+    @Test
+    public void createOrderRandomByAggregationTest() throws InterruptedException {
+        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        while (true){
+            new Executor(new ExecutorInterface() {
+                @Override
+                public void executeJob(){
+                    for (int i = 0; i < 1; i++) {
+                        JSONObject param = getCreateOrderParam();
+                        String result = "";
+                        try {
+                            result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
+                            printResult(result);
+                            JSONObject jsonObject= JSON.parseObject(result);
+                            if (jsonObject.getInteger("code")==100000){
+                                atomicInteger.addAndGet(1);
+                            }else{
+                                System.out.println("ERROR:");
+                                System.out.println(result);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start(RandomValueUtil.randomIntValue(50,100));
+            System.out.println("success count:"+atomicInteger.get());
+        }
+    }
+
 
     @Test
     public void requestManagementTest() throws InterruptedException {

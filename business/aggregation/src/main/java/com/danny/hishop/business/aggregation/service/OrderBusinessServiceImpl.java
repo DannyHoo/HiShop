@@ -75,7 +75,7 @@ public class OrderBusinessServiceImpl implements OrderBusinessService {
         initOrderDetailDTOList(orderDetailDTOList, orderNo);
 
         //加锁开始
-        lock.lock();
+        lock.lock();// TODO: 2020/3/11 锁优化 
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
             //校验商品信息
             Response<GoodsDTO> goodsDTOResponse = goodsService.getByGoodsNo(orderDetailDTO.getGoodsNo());

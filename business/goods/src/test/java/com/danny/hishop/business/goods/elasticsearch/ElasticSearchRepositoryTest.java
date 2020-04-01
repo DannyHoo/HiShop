@@ -1,5 +1,6 @@
 package com.danny.hishop.business.goods.elasticsearch;
 
+import com.alibaba.fastjson.JSON;
 import com.danny.hishop.business.goods.GoodsApplicationTests;
 import com.danny.hishop.business.goods.GoodsApplicationTests;
 import com.danny.hishop.business.goods.elasticsearch.GoodsDocument;
@@ -135,8 +136,9 @@ public class ElasticSearchRepositoryTest extends GoodsApplicationTests {
     public void saveTest1() throws IOException {
         String[] keywords = new String[]{"手机", "衣服", "食品", "电脑", "母婴", "电器", "美妆", "男鞋", "女鞋"};
         for (int j = 0; j < keywords.length; j++) {
-            for (int i = 1; i < 30; i++) {
-                String url = "https://search.jd.com/Search?keyword=" + keywords[j] + "&enc=utf-8&psort=3&page=" + i;//第二页商品
+            for (int i = 10; i < 20; i++) { //i==1
+                String url = "https://search.jd.com/Search?keyword=" + keywords[j] + "&enc=utf-8&psort=3&page=" + (i*2-1);//第二页商品
+                //String url = "https://search.jd.com/Search?keyword=" + keywords[j] + "&enc=utf-8&psort=3&page=" + i;//第二页商品
                 //String url = "https://search.jd.com/Search?keyword=衣服&enc=utf-8&psort=3&page="+i;//第二页商品
                 //网址分析
                 /*keyword:关键词（京东搜索框输入的信息）
@@ -145,6 +147,7 @@ public class ElasticSearchRepositoryTest extends GoodsApplicationTests {
                  * page=分业（不考虑动态加载时按照基数分业，每一页30条，这里就不演示动态加载）
                  * 注意：受京东商品个性化影响，准确率无法保障
                  * */
+
                 org.jsoup.nodes.Document doc = Jsoup.connect(url).maxBodySize(0).get();
                 //doc获取整个页面的所有数据
                 Elements ulList = doc.select("ul[class='gl-warp clearfix']");
@@ -153,11 +156,18 @@ public class ElasticSearchRepositoryTest extends GoodsApplicationTests {
                 for (Element item : liList) {
                     //排除广告位置
                     if (!item.select("span[class='p-promo-flag']").text().trim().equals("广告")) {
+                        String title=item.select("div[class='p-name p-name-type-2']").select("em").text();
+                        String price=item.select("div[class='p-price']").select("i").text();
+                        String image="https:"+item.select("div[class='p-img']").select("a").select("img").attr("source-data-lazy-img");
                         //如果向存到数据库和文件里请自行更改
-                        System.out.println(item.select("div[class='p-name p-name-type-2']").select("em").text());//打印商品标题到控制台
+                        System.out.println(title +" "+ price+" "+image);//打印商品标题到控制台
                         list.add(item.select("div[class='p-name p-name-type-2']").select("em").text());
                         GoodsDocument goodsInsertData = getGoods(item.select("div[class='p-name p-name-type-2']").select("em").text());
+                        goodsInsertData.setGoodsName(title)
+                                //.setNowPrice(new BigDecimal(price)).setOriginPrice(new BigDecimal(price))
+                                .setPictureUrls(image);
                         GoodsDocument goodsInsertResult = goodsEsRepository.save(goodsInsertData);
+                        System.out.println("insert one:"+ JSON.toJSONString(goodsInsertData));
                     }
                 }
             }

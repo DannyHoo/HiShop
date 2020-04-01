@@ -48,6 +48,7 @@ public class LoadBalanceTest extends AggregationApplicationTests {
     /**
      * 2、用LoadBalance实现动态IP调用
      * 不需要强制写死 IP, 只需要指定调用哪一个服务名即可实现客户端版的负载均衡
+     * Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号
      */
     @Test
     public void loadBalancerClientTest() {

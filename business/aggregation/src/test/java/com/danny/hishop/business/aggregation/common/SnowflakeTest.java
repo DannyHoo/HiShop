@@ -5,6 +5,7 @@ import com.danny.hishop.framework.util.DateUtils;
 import com.danny.hishop.framework.util.snowflake.autoconfigure.core.Snowflake;
 import com.danny.hishop.framework.util.test.Executor;
 import com.danny.hishop.framework.util.test.ExecutorInterface;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author huyuyang
  * @date 2020/2/17下午2:31
  */
+@Slf4j
 public class SnowflakeTest extends AggregationApplicationTests {
 
     @Autowired
@@ -23,10 +25,13 @@ public class SnowflakeTest extends AggregationApplicationTests {
         long snowflakeId=snowflake.genId();
         System.out.println(threadNum+"个线程开始打印，开始时间："+ DateUtils.getFullDateFormat(DateUtils.getNowDate()));
 
+        log.info("开始生成ID");
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
             public void executeJob() {
                 long snowflakeId=snowflake.genId();
+                log.info("生成ID:{}",snowflakeId);
+                //2020-03-31 17:24:42.826 INFO  [Thread-50]c.d.h.b.a.c.SnowflakeTest - 生成ID:694598061304430620
                 System.out.println(Thread.currentThread().getName()+":"+snowflakeId);
                 System.out.println(Thread.currentThread().getName()+":"+Long.toBinaryString(snowflakeId));
             }
