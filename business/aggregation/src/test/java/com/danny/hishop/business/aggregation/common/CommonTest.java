@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @author huyuyang
- * @email yuyang.hu@opay-inc.com
+ * logPath
  * @date 2020/4/1下午8:47
  */
 @Slf4j
