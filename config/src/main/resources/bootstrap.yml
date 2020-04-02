@@ -20,3 +20,9 @@ spring:
         #native:
           #search-locations: file:/data/config/ #ConfigServer默认从指定目录下检索配置文件
       label: master
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

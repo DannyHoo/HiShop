@@ -1,7 +1,6 @@
 package com.danny.hishop.business.user;
 
 import com.alibaba.fastjson.JSON;
-import netscape.javascript.JSUtil;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;

@@ -4,6 +4,7 @@ import com.danny.hishop.framework.util.snowflake.autoconfigure.annotation.Enable
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -23,6 +24,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableSnowflake
 @EnableScheduling
 @EnableAsync //貌似没有也可以？
+@RefreshScope //开启actuator的/refresh机制
 @ComponentScan(basePackages = {"com.danny.hishop.business.order","com.danny.hishop.framework"})
 public class OrderApplication {
 
