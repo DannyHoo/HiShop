@@ -32,8 +32,8 @@ public class SnowflakeTest extends AggregationApplicationTests {
                 long snowflakeId=snowflake.genId();
                 log.info("生成ID:{}",snowflakeId);
                 //2020-03-31 17:24:42.826 INFO  [Thread-50]c.d.h.b.a.c.SnowflakeTest - 生成ID:694598061304430620
-                System.out.println(Thread.currentThread().getName()+":"+snowflakeId);
-                System.out.println(Thread.currentThread().getName()+":"+Long.toBinaryString(snowflakeId));
+                //System.out.println(Thread.currentThread().getName()+":"+snowflakeId);
+                //System.out.println(Thread.currentThread().getName()+":"+Long.toBinaryString(snowflakeId));
             }
         });
         executor.start(threadNum);

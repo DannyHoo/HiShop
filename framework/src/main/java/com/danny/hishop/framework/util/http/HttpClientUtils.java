@@ -59,9 +59,28 @@ public class HttpClientUtils extends AbstractHttpClientUtil{
             return HttpStatus.SC_BAD_REQUEST;
         } finally {
             method.releaseConnection();
+
         }
         logger.info("执行HTTP GET请求，返回码: {}", method.getStatusCode());
         return method.getStatusCode();
+    }
+
+    public static String doGetAndReturn(String url) throws IOException {
+        HttpClient client = new HttpClient();
+        HttpMethod method = new GetMethod(url);
+        try {
+            client.executeMethod(method);
+        } catch (URIException e) {
+            logger.error("执行HTTP Get请求时，发生异常！", e);
+            return String.valueOf(HttpStatus.SC_BAD_REQUEST);
+        } catch (IOException e) {
+            logger.error("执行HTTP Get请求" + url + "时，发生异常！", e);
+            return String.valueOf(HttpStatus.SC_BAD_REQUEST);
+        } finally {
+            method.releaseConnection();
+        }
+        logger.info("执行HTTP GET请求，返回码: {}", method.getStatusCode());
+        return method.getResponseBodyAsString();
     }
 
     /**

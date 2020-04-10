@@ -10,11 +10,11 @@ scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没�
 debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。-->
 <configuration scan="true" scanPeriod="10 seconds" debug="false">
 
-    <contextName>hishop-aggregation</contextName>
+    <contextName>hishop-gateway</contextName>
 
     <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
     <property name="logPath" value="/data/log/hishop"/>
-    <property name="loggerAppName" value="otrade-marketing"/>
+    <property name="loggerAppName" value="hishop-gateway"/>
     <property name="logPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${loggerAppName},%X{TRACE_ID},%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export},%thread%X{sourceThread}] %logger{50}  - %msg%n"/>
 
     <!--输出到控制台-->
@@ -83,5 +83,4 @@ debug: 当此属性设置为true时，将打印出logback内部日志信息，�
         <appender-ref ref="INFO_FILE"/>
         <appender-ref ref="ERROR_FILE"/>
     </root>
-
 </configuration>

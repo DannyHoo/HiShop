@@ -59,6 +59,16 @@
             <version>1.5.18</version>
         </dependency>
 
+        <!-- Zipkin(已经包含Sleuth)-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>-->
+
         <!-- 数据库 -->
         <dependency>
             <groupId>mysql</groupId>

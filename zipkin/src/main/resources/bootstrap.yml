@@ -1,0 +1,35 @@
+
+server:
+  port: 8400
+
+spring:
+  application:
+    name: hishop-zipkin
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://140.143.158.164:8000/
+      label: master
+      profile: dev
+      name: ${spring.application.name},common
+  zipkin:
+    #base-url: ${spring.cloud.client.ip-address}:${server.port} #zipkin页面访问
+    base-url: http://140.143.158.164:${server.port} #zipkin页面访问
+
+# 监控配置
+management:
+  server:
+    port: 8400  #2.0版本之后 不加启动端口 访问/refresh报404
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        #exclude: beans #不暴露beans端点
+  metrics:
+    web:
+      server:
+        auto-time-requests: false #zipkin启动报错：java.lang.IllegalArgumentException: Prometheus requires that all meters with the same name have the same set of tag keys. There is already an existing meter containing tag keys [method, status, uri]. The meter you are attempting to register has keys [exception, method, status, uri].

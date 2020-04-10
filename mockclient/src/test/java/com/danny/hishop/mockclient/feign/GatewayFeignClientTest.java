@@ -24,6 +24,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
 
     @Autowired
     private GatewayFeignClient gatewayFeignClient;
+
     private JSONObject getCreateOrderParam() {
         JSONObject param = new JSONObject();
         JSONObject userDTO = new JSONObject();
@@ -43,18 +44,18 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
      */
     @Test
     public void createOrderTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
-            public void executeJob(){
+            public void executeJob() {
                 for (int i = 0; i < 1; i++) {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
                         JSONObject jsonObject = gatewayFeignClient.createOrder(param);
-                        if (jsonObject.getInteger("code")==100000){
+                        if (jsonObject.getInteger("code") == 100000) {
                             atomicInteger.addAndGet(1);
-                        }else{
+                        } else {
                             System.out.println("ERROR:");
                             System.out.println(result);
                         }
@@ -64,27 +65,26 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
             }
         });
         executor.start(1);
-        System.out.println("success count:"+atomicInteger.get());
-
+        System.out.println("success count:" + atomicInteger.get());
     }
 
     //直接访问gateway
     @Test
     public void createOrderByGatewayTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
-            public void executeJob(){
+            public void executeJob() {
                 for (int i = 0; i < 1; i++) {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://10.249.254.246:8200/api/aggregation/order/create", param, 180000);
+                        result = HttpClientUtils.doPost("http://10.249.254.246:8200/api/aggregation/order/create", param, 180000);
                         printResult(result);
-                        JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==100000){
+                        JSONObject jsonObject = JSON.parseObject(result);
+                        if (jsonObject.getInteger("code") == 100000) {
                             atomicInteger.addAndGet(1);
-                        }else{
+                        } else {
                             System.out.println("ERROR:");
                             System.out.println(result);
                         }
@@ -95,7 +95,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
             }
         });
         executor.start(100);
-        System.out.println("success count:"+atomicInteger.get());
+        System.out.println("success count:" + atomicInteger.get());
     }
 
     //直接访问aggregation
@@ -103,20 +103,20 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
     //SELECT t.create_second,count(t.id) FROM(SELECT t1.id,t1.createTime,DATE_FORMAT(t1.createTime,'%Y-%m-%d %H:%i:%S') create_second FROM hishop_order.t_order t1 ORDER BY t1.createTime ) AS t GROUP BY t.create_second ORDER BY t.create_second DESC;
     @Test
     public void createOrderByAggregationTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
-            public void executeJob(){
+            public void executeJob() {
                 for (int i = 0; i < 1; i++) {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
+                        result = HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
                         printResult(result);
-                        JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==100000){
+                        JSONObject jsonObject = JSON.parseObject(result);
+                        if (jsonObject.getInteger("code") == 100000) {
                             atomicInteger.addAndGet(1);
-                        }else{
+                        } else {
                             System.out.println("ERROR:");
                             System.out.println(result);
                         }
@@ -127,49 +127,50 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
             }
         });
         executor.start(500);
-        System.out.println("success count:"+atomicInteger.get());
+        System.out.println("success count:" + atomicInteger.get());
     }
 
     @Test
     public void createOrderByAggregationLoopTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
-        for (int i = 0; i < 100000; i++) {
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
+        for (int i = 0; i < 1; i++) {
             JSONObject param = getCreateOrderParam();
             String result = "";
             try {
-                result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
+                result = HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
                 printResult(result);
-                JSONObject jsonObject= JSON.parseObject(result);
-                if (jsonObject.getInteger("code")==100000){
+                JSONObject jsonObject = JSON.parseObject(result);
+                if (jsonObject.getInteger("code") == 100000) {
                     atomicInteger.addAndGet(1);
-                }else{
+                } else {
                     System.out.println("ERROR:");
                     System.out.println(result);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("success count:"+atomicInteger.get());
+            System.out.println("success count:" + atomicInteger.get());
         }
     }
 
     @Test
     public void createOrderRandomByAggregationTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
-        while (true){
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
+        while (true) {
+            Thread.sleep(1000);
             new Executor(new ExecutorInterface() {
                 @Override
-                public void executeJob(){
+                public void executeJob() {
                     for (int i = 0; i < 1; i++) {
                         JSONObject param = getCreateOrderParam();
                         String result = "";
                         try {
-                            result= HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
+                            result = HttpClientUtils.doPost("http://192.168.8.103:8311/order/create", param, 180000);
                             printResult(result);
-                            JSONObject jsonObject= JSON.parseObject(result);
-                            if (jsonObject.getInteger("code")==100000){
+                            JSONObject jsonObject = JSON.parseObject(result);
+                            if (jsonObject.getInteger("code") == 100000) {
                                 atomicInteger.addAndGet(1);
-                            }else{
+                            } else {
                                 System.out.println("ERROR:");
                                 System.out.println(result);
                             }
@@ -178,35 +179,35 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                         }
                     }
                 }
-            }).start(RandomValueUtil.randomIntValue(50,100));
-            System.out.println("success count:"+atomicInteger.get());
+            }).start(RandomValueUtil.randomIntValue(1, 10));
+            System.out.println("success count:" + atomicInteger.get());
         }
     }
 
 
     @Test
     public void requestManagementTest() throws InterruptedException {
-        final AtomicInteger atomicInteger=new AtomicInteger(0);
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
         Executor executor = new Executor(new ExecutorInterface() {
             @Override
-            public void executeJob(){
+            public void executeJob() {
                 for (int i = 0; i < 1; i++) {
                     JSONObject param = getCreateOrderParam();
-                    JSONObject riskParam=new JSONObject();
-                    riskParam.put("request_id","20ij2ef9j20ef92jf02");
-                    riskParam.put("group_code","CO-10000001");
-                    riskParam.put("user_id","999");
-                    riskParam.put("user_device_id","32023j23234o23");
+                    JSONObject riskParam = new JSONObject();
+                    riskParam.put("request_id", "20ij2ef9j20ef92jf02");
+                    riskParam.put("group_code", "CO-10000001");
+                    riskParam.put("user_id", "999");
+                    riskParam.put("user_device_id", "32023j23234o23");
                     String result = "";
                     try {
-                        result= HttpClientUtils.doPost("http://10.249.254.246:8200/api/management/test/gateway", param, 180000);
+                        result = HttpClientUtils.doPost("http://10.249.254.246:8200/api/management/test/gateway", param, 180000);
                         //result= HttpClientUtils.doPost("http://10.249.201.159:8200/api/management/test/gateway", param, 180000);
                         //result= HttpClientUtils.doPost("http://localhost:8070/opos/rc/verify", riskParam, 180000);
                         printResult(result);
-                        JSONObject jsonObject= JSON.parseObject(result);
-                        if (jsonObject.getInteger("code")==200){
+                        JSONObject jsonObject = JSON.parseObject(result);
+                        if (jsonObject.getInteger("code") == 200) {
                             atomicInteger.addAndGet(1);
-                        }else{
+                        } else {
                             System.out.println("ERROR:");
                             System.out.println(result);
                         }
@@ -217,7 +218,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
             }
         });
         executor.start(400);
-        System.out.println("success count:"+atomicInteger.get());
+        System.out.println("success count:" + atomicInteger.get());
     }
 
 }

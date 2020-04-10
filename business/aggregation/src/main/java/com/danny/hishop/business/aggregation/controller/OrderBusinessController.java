@@ -1,5 +1,6 @@
 package com.danny.hishop.business.aggregation.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.danny.hishop.business.aggregation.model.order.param.CreateOrderParameter;
 import com.danny.hishop.business.aggregation.service.OrderBusinessService;
 import com.danny.hishop.framework.model.response.Response;
@@ -37,6 +38,7 @@ public class OrderBusinessController {
      */
     @RequestMapping("/create")
     public Response createOrder(HttpServletRequest httpServletRequest, @RequestBody CreateOrderParameter createOrderParameter) {
+        log.info("createOrder createOrderParameter[{}]", JSON.toJSONString(createOrderParameter));
         ServiceResult result = orderBusinessService.createOrder(createOrderParameter);
         return Response.build(result);
     }
