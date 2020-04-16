@@ -3,6 +3,7 @@ package com.danny.hishop.business.goods.service;
 
 import com.danny.hishop.business.goods.model.dto.GoodsDTO;
 import com.danny.hishop.business.goods.model.param.GoodsParameter;
+import com.danny.hishop.business.goods.model.param.ReduceStockParameter;
 import com.danny.hishop.framework.model.result.ServiceResult;
 
 /**
@@ -18,4 +19,6 @@ public interface GoodsService {
     ServiceResult<Boolean> saveGoods(GoodsParameter setBalance);
 
     ServiceResult<Boolean> updateGoods(GoodsParameter setBalance);
+
+    ServiceResult<Boolean> reduceStock(ReduceStockParameter reduceStockParameter);
 }

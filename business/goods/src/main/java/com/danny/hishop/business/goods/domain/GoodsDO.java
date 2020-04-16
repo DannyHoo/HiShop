@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @Data
 @Accessors(chain = true)
 public class GoodsDO extends BaseDO {
+    private Long id;
     /* 商品编号 */
     private String goodsNo;
     /* 商品名称 */
@@ -34,5 +35,7 @@ public class GoodsDO extends BaseDO {
     private String pictureUrls;
     /* 商品状态 10正常 20下架 */
     private Integer status;
+    /* 版本 */
+    private Integer version;
 
 }

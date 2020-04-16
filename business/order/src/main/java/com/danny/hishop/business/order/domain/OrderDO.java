@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author Danny
@@ -42,5 +43,6 @@ public class OrderDO extends BaseDO {
     private BigDecimal freight;
     /* 应付总额 */
     private BigDecimal actualPrice;
-
+    /*失效时间*/
+    private Date expireTime;
 }

@@ -31,4 +31,5 @@ public class GoodsDaoTest extends GoodsApplicationTests {
         int result = goodsDAO.update(goodsDO);
         printResult(result);
     }
+
 }
