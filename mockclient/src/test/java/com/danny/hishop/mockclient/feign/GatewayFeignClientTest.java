@@ -79,7 +79,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                     JSONObject param = getCreateOrderParam();
                     String result = "";
                     try {
-                        result = HttpClientUtils.doPost("http://10.249.254.246:8200/api/aggregation/order/create", param, 180000);
+                        result = HttpClientUtils.doPost("http://10.249.201.159:8200/api/aggregation/order/create", param, 180000);
                         printResult(result);
                         JSONObject jsonObject = JSON.parseObject(result);
                         if (jsonObject.getInteger("code") == 100000) {
@@ -94,7 +94,7 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
                 }
             }
         });
-        executor.start(100);
+        executor.start(1);
         System.out.println("success count:" + atomicInteger.get());
     }
 

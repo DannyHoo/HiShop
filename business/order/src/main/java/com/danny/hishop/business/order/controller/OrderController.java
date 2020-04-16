@@ -1,6 +1,7 @@
 package com.danny.hishop.business.order.controller;
 
 
+import com.danny.hishop.business.order.model.param.CreateOrderParameter;
 import com.danny.hishop.business.order.model.param.OrderParameter;
 import com.danny.hishop.business.order.service.OrderService;
 import com.danny.hishop.framework.model.response.Response;
@@ -30,5 +31,12 @@ public class OrderController {
         ServiceResult result = orderService.saveOrder(orderParameter);
         return Response.build(result);
     }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public Response create(@RequestBody CreateOrderParameter createOrderParameter) throws Exception {
+        ServiceResult result = orderService.createOrder(createOrderParameter);
+        return Response.build(result);
+    }
+
 
 }

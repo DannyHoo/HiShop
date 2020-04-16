@@ -3,6 +3,7 @@ package com.danny.hishop.business.order.service.impl;
 import com.danny.hishop.business.order.dao.OrderDAO;
 import com.danny.hishop.business.order.domain.OrderDO;
 import com.danny.hishop.business.order.model.dto.OrderDTO;
+import com.danny.hishop.business.order.model.param.CreateOrderParameter;
 import com.danny.hishop.business.order.model.param.OrderParameter;
 import com.danny.hishop.business.order.service.OrderService;
 import com.danny.hishop.framework.model.enums.ResultStatusEnum;
@@ -35,5 +36,10 @@ public class OrderServiceImpl implements OrderService {
         }
         return new ServiceResult<OrderDTO>(ResultStatusEnum.FAILURE);
 
+    }
+
+    @Override
+    public ServiceResult createOrder(CreateOrderParameter createOrderParameter) {
+        return null;
     }
 }

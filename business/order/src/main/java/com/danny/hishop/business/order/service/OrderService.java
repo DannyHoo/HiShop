@@ -1,6 +1,7 @@
 package com.danny.hishop.business.order.service;
 
 import com.danny.hishop.business.order.model.dto.OrderDTO;
+import com.danny.hishop.business.order.model.param.CreateOrderParameter;
 import com.danny.hishop.business.order.model.param.OrderParameter;
 import com.danny.hishop.framework.model.result.ServiceResult;
 
@@ -11,5 +12,7 @@ import com.danny.hishop.framework.model.result.ServiceResult;
  * @Created on 2019-01-09 23:10:06
  */
 public interface OrderService {
-    public ServiceResult<OrderDTO> saveOrder(OrderParameter orderParameter);
+    ServiceResult<OrderDTO> saveOrder(OrderParameter orderParameter);
+
+    ServiceResult createOrder(CreateOrderParameter createOrderParameter);
 }

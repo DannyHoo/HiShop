@@ -60,9 +60,9 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
           semaphore:
-            maxConcurrentRequests: 100
-          #thread:
-            #timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
+            maxConcurrentRequests: 500
+          thread:
+            timeoutInMilliseconds: 20000 #hystrix超时时间，默认1秒
         timeout:
           enabled: false #hystrix从不超时
       circuitBreaker:
