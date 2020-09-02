@@ -1,13 +1,50 @@
 package com.danny.hishop.framework.util;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
+
+    @Data
+    @Accessors(chain = true)
+    public static class Pair {
+        BigDecimal maxWeight=BigDecimal.ZERO;
+        BigDecimal minWeight=BigDecimal.ZERO;
+    }
+
+    public static void main(String[] args) {
+
+
+
+        List<Pair> pairList = new ArrayList<>();
+        pairList.add(new Pair());
+        pairList.add(new Pair());
+        pairList.add(new Pair());
+        BigDecimal maxWeight = BigDecimal.ZERO;
+        for (int i = 1; i <= 5; i++) {
+            BigDecimal minWeight = BigDecimal.ZERO;
+            for (int j = 0; j < pairList.size(); j++) {
+                pairList.get(j).setMinWeight(minWeight).setMaxWeight(new BigDecimal(j+1));
+            }
+        }
+
+        BigDecimal skuWeight=new BigDecimal("11.01");
+        final BigDecimal[] totalWeight = {BigDecimal.ZERO};
+        pairList.stream().forEach(pair -> {
+            totalWeight[0] = totalWeight[0].add(skuWeight.multiply(new BigDecimal(2)));
+        });
+    }
+
     public static ApplicationContext applicationContext;
 
     public static Object getBean(String name) {

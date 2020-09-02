@@ -221,4 +221,25 @@ public class GatewayFeignClientTest extends MockClientApplicationTests {
         System.out.println("success count:" + atomicInteger.get());
     }
 
+    @Test
+    public void sendMQTest() throws InterruptedException {
+        final AtomicInteger atomicInteger = new AtomicInteger(0);
+        Executor executor = new Executor(new ExecutorInterface() {
+            @Override
+            public void executeJob() {
+                for (int i = 0; i < 100; i++) {
+                    try {
+                        HttpClientUtils.doGet("http://localhost:8021/sendMessage");
+                        atomicInteger.addAndGet(1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        executor.start(500);
+        System.out.println("success count:" + atomicInteger.get());
+    }
+
+
 }
