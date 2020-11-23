@@ -12,6 +12,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 从@Async案例找到Spring框架的bug：exposeProxy=true不生效原因大剖析+最佳解决方案【享学Spring】
+ * https://cloud.tencent.com/developer/article/1497700
+ */
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
 
